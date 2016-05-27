@@ -1,0 +1,152 @@
+<!--
+Build a simple page in HTML5 that has a header, main content, and footer.
+In the main content build a form that contains name, email address, phone
+number, and a date in the format of YYYY­MM­DD. All fields are required
+and must be valid input. On valid submit just display the form data on the
+page below the form. Choose: AngularJS/JQuery/Standard JavaScript
+-->
+<!DOCTYPE html>
+<html lang="en">
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="container-fluid">
+        <a href="#" class="pull-left"><img src="EP-Logo-notag.png" class="img-responsive"></a>
+
+    </nav><img alt="Bootstrap Image Preview" src="laundrybanner.jpg" class="img-responsive">
+    <div class="row">
+      <form class="cmxform" id="contact" method="post" action="">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter Name" required>
+      </div>
+      <div class="form-group">
+          <label for="pwd">Phone Number:</label>
+          <input type="number" class="form-control" id="phoneNumber" placeholder="Enter Phone Number" required>
+      </div>
+      <div class="form-group">
+          <label for="pwd">Date:</label>
+          <input type="date" class="form-control" name="dateNew" id="dateNew" placeholder="Enter Date YYYY/MM/DD" required>
+      </div>
+      <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+
+</div>
+</div>
+<div class="pull-center" >
+    <div class="jumbotron" >
+
+
+
+        <p id="preview"  class="text-center text-success"></p>
+    </div>
+</div>
+</div> 
+</head>
+<body>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+<script>
+$.validator.addMethod(
+    "myDateFormat",
+    function(value, element) {
+        // yyyy-mm-dd
+        var re = /^\d{4}-\d{1,2}-\d{1,2}$/;
+
+        // valid if optional and empty OR if it passes the regex test
+        return (this.optional(element) && value=="") || re.test(value);
+    }
+);
+
+$('#contact').validate({
+  rules: {
+    dateNew: {
+      // not optional
+      required: true,
+      // valid date
+      date: true
+    }
+  }
+});
+</script>
+
+
+
+            <script>
+                function formatDate(userDate) {
+                  userDate = new Date(userDate);
+                  y = userDate.getFullYear().toString();
+                  m = (userDate.getMonth() + 1).toString();
+                  d = userDate.getDate().toString();
+                  if (m.length == 1) m = '0' + m;
+                  if (d.length == 1) d = '0' + d;
+                  return y +"/"+ m +"/" + d;
+                }
+                $(document).ready(function () {
+                    $("#submitButton").click(function () {
+                        content = "";
+                        var email = $('#email').val();
+                        var name = $('#name').val();
+                        var phoneNumber = $('#phoneNumber').val();
+                        var date = $('#dateNew').val();
+                        if (email || name || phoneNumber || date){
+                          if (email) {
+                            content += "Email: " + email;
+                          }
+                          if (name) {
+                            if (content){
+                              content += " <br /> Name: " + name;
+                            } else {
+                              content += "Name: " + name;
+                            }
+                          }
+                          if (phoneNumber){
+                            if (content){
+                              content += " <br /> PhoneNumber: " + phoneNumber;
+                            } else {
+                              content += "PhoneNumber: " + phoneNumber;
+                            }
+                          }
+                          if (date) {
+                            if(content){
+                              content += " <br /> Date: " + formatDate(date);
+                            } else {
+                              content += "Date: " + formatDate(date);
+                            }
+                          }
+                        }
+                        $('#preview').html(content);
+                        $("#preview").show();
+                    });
+                    // $("#hide").click(function () {
+                    //     $("#preview").hide();
+                    // });
+                });
+            </script>
+
+
+
+
+</body>
+</html>
