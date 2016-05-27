@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,18 +9,21 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="js/jquery-ui-1.11.4.custom/jquery-ui.min.css" rel="stylesheet">
 
 </head>
 
 <body>
     <div class="container-fluid">
-        <a href="#" class="pull-left"><img src="EP-Logo-notag.png" class="img-responsive"></a>
-        <img alt="Bootstrap Image Preview" src="laundrybanner.jpg" class="img-responsive">
-        <div class="row">
+        <header>
+            <a href="#" class="pull-left"><img src="EP-Logo-notag.png" class="img-responsive"></a>
+            <img alt="Bootstrap Image Preview" src="laundrybanner.jpg" class="img-responsive">
+        </header>
+        <div class="row main">
             <form class="cmxform" id="contact" method="post" action="">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                    <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
                 </div>
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label for="pwd">Date:</label>
-                    <input type="date" class="form-control" name="dateNew" id="dateNew" data-date-format="YYYY/MM/DD" required>
+                    <input type="text" class="form-control" name="datepicker" id="datepicker" placeholder="Select a  Date" readonly="readonly" style="background:white;" required>
                 </div>
                 <button onclick="return onSumbit();" id="submitButton" type="submit" class="btn btn-default">Submit</button>
             </form>
@@ -52,15 +52,16 @@
 
     <script src="js/jquery-2.2.3.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 
     <script>
         function onSumbit() {
-            if ($("#name")[0].checkValidity() && $("#email")[0].checkValidity() && $("#phoneNumber")[0].checkValidity() && $("#dateNew")[0].checkValidity()) {
+            if ($("#name")[0].checkValidity() && $("#email")[0].checkValidity() && $("#phoneNumber")[0].checkValidity() && $("#datepicker")[0].checkValidity()) {
                 var value =
                         "Name: " + $("#name").val() + "<br/>" +
                         "Email: " + $("#email").val() + "<br/>" +
                         "Phone Number: " + $("#phoneNumber").val() + "<br/>" +
-                        "Date: " + $("#dateNew").val();
+                        "Date: " + $("#datepicker").val();
                 $('#preview').html(value);
                 $("#preview").show();
                 return false;
@@ -69,6 +70,11 @@
                 $("#preview").hide();
             }
         }
+        $(function() {
+            $( "#datepicker" ).datepicker({
+                dateFormat: "yy-mm-dd"
+            });
+        });
     </script>
 </body>
 </html>
