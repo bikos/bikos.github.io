@@ -1,6 +1,0 @@
-Build a simple page in HTML5 that has a header, main content, and footer.
-In the main content build a form that contains name, email address, phone
-number, and a date in the format of YYYY­MM­DD.
-All fields are required and must be valid input.
-On valid submit just display the form data on the page below the form.
-Choose: AngularJS/JQuery/Standard JavaScript
