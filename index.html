@@ -151,17 +151,23 @@
 				<br> Asset Value:
 				<br>
 				<input type="number" id="asset" name="asset" value="">
-				<br> Risk Value:
+				<br> Risk Likelihood:
 				<br>
 				<input type="number" id="risk" name="risk" value="">
 				<br> Uncertainity:
 				<br>
 				<input type="number" id="uncertanity" name="uncertanity" value="">
+				<br> Control:
+				<br>
+				<input type="number" id="control" name="control" value="">
 				<br>
 				<br>
 				<input type="submit" value="Compute">
 				<label id="messageBox" generated="true" class="error"></label>
+				
 			</form>
+			<br>
+			<button id="refreshTraditional">Refresh!</button>
 			<br>
 			<p class="notice" id="traditionalText"></p>
 
@@ -183,6 +189,7 @@
 				<br>
 				<input type="submit" value="Compute">
 				<label id="messageBox" generated="true" class="error"></label>
+				
 			</form>
 			<br>
 			<p class="notice" id="traditionalText"></p>
@@ -217,7 +224,7 @@
 		
 	</div>
 
-	<script src="external/jquery/jquery.js"></script>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
@@ -229,9 +236,16 @@
 
 	<script>
 		//////////////////////////////////////////////////////
+		
+		$( document ).ready(function() {
+		
 		$("#traditionalCheck").hide();
 		$("#gameTheoryCheck").hide();
 		$("#mixedCheck").hide();
+		$("#refreshTraditional").click(function(){
+			$("#traditionalForm")[0].reset();
+			
+		});	
 		
 		jQuery('#myselect').on('change', (function () {
 			var value = $(this).val();
@@ -242,8 +256,13 @@
 				$("#traditionalCheck").slideDown( 300, "swing");
 				$("#traditionalForm").submit(function(){
 					//alert("submit clicked");
+					
+							 var isvalidate=$("#traditionalForm").valid();
+        			
+					if(isvalidate){
 					var riskScore = calculateTraditional();
 					$("#traditionalText").text("The risk score for given device is "+ riskScore );
+					}
 				});
 
 				
@@ -288,7 +307,9 @@
 			 var asset = $("#asset").val();
 			var risk = $("#risk").val();
 			var uncertanity = $("#uncertanity").val();
-			return(+asset*+risk*+uncertanity);
+			var control=$("#control").val();
+			var riskScore = (+risk*+asset) -((+risk*+asset)*(+control/100))+((+risk*+asset)*((+uncertanity/100)));
+			return(riskScore);
 			
 			
 		}
@@ -313,23 +334,35 @@
 			rules: {
 				asset: {
 					required: true,
+					range: [0, 100]
 				}
 				, risk: {
 					required: true,
+					range: [0, 1]
 
 				}
 				, uncertanity: {
 					required: true,
+					range: [0, 100]
+
+				}
+				, control: {
+					required: true,
+					range: [0, 100]
 
 				}
 
 			},
 			messages:{
 				
-				asset: "asset value is required between 0-100",
-				risk: "risk score is required between 0-1",
-				uncertanity: "uncertainity is required between 0-1",
+				asset: "Asset Value should be between 0-100",
+				risk: "Risk Likelihood should be between 0-1",
+				uncertanity: "Uncertanity should be between 0-100",
+				control: "Control should be between 0-100"
 			}
+		});
+			
+			
 		});
 
 
