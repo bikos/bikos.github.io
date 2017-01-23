@@ -53,7 +53,9 @@
 		}
 		
 		.my-error-class {
-			color: #FF0000;
+			color: black;
+			font-style: italic;
+			font-size: 18px;
 			/* red */
 		}
 		
@@ -64,62 +66,92 @@
 			/* green */
 		}
 		
+		.formulaBlock {
+			background: #b8c1d1;
+			color: black;
+			border: 2px solid #456879;
+			border-radius: 20px;
+			width:640px;
+			height: auto;
+			margin:auto;
+			position:relative;
+			text-align: center;
+			width: 40%;
+		}
+		
 		select.error,
 		textarea.error,
 		input.error {
 			color: #FF0000;
 		}
 		
-		.notice{
-			background: #DBDCB2;
-			color: green;
+		.notice {
+			background: #5ca8a1;
+			color: black;
 			font-size: x-large;
 			font-style: bold;
+			margin: 0 0 24px;
+			border: 2px solid #456879;
+			border-radius: 10px;
 		}
+		
+		.theoryText {
+			background: #e8c951;
+			color: #685206;
+			font-family: 'Helvetica Neue', sans-serif;
+			font-size: 22px;
+			line-height: 24px;
+			margin: 0 0 24px;
+			border: 2px solid #456879;
+			border-radius: 10px;
+			
+			text-justify: inter-word;
+		}
+		  .footer{ 
+       position: fixed;     
+       text-align: center;    
+       bottom: 0px; 
+       width: 100%;
+   }  
 		
 		form {
 			padding: 20px;
-			background: #2c3e50;
+			background: #b5a03b;
 			color: #fff;
 			-moz-border-radius: 4px;
 			-webkit-border-radius: 4px;
-			border-radius: 4px;
-		
-		
-		form label,
-		form input,
-		 {
-			border: 0;
-			margin-bottom: 3px;
-			display: block;
-			width: 100%;
-			
-		}
-		
-		form input {
-			height: 25px;
-			line-height: 25px;
-			background: #fff;
-			color: #000;
-			padding: 0 6px;
-			-moz-box-sizing: border-box;
-			-webkit-box-sizing: border-box;
-			box-sizing: border-box;
-		}
-		
-		form button {
-			height: 30px;
-			line-height: 30px;
-			background: #fff;
-			color: green;
-			margin-top: 10px;
-			cursor: pointer;
-			width: 100%;
-		}
-		
-		form .error {
-			color: #ff0000;
-		}
+			border-radius: 10px;
+			border: 2px solid #456879;
+			form label,
+			form input,
+			{
+				border: 0;
+				margin-bottom: 3px;
+				display: block;
+				width: 100%;
+			}
+			form input {
+				height: 25px;
+				line-height: 25px;
+				background: #fff;
+				color: #000;
+				padding: 0 6px;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			form button {
+				height: 30px;
+				line-height: 30px;
+				background: #fff;
+				color: green;
+				margin-top: 10px;
+				cursor: pointer;
+				width: 100%;
+			}
+			form .error {
+				color: #ff0000;
+			}
 		}
 	</style>
 </head>
@@ -136,7 +168,7 @@
 		<div>
 			<select id="myselect">
 				<option selected disabled>Select One option</option>
-				<option value="1" >Traditional</option>
+				<option value="1">Traditional</option>
 				<option value="2">Game Theory</option>
 				<option value="3">Mixed</option>
 
@@ -145,90 +177,112 @@
 		<br>
 
 		<div id="computationArea">
-		<div id="traditionalCheck">
-			<h3>Traditional Method</h3>
-			<form id="traditionalForm">
-				<br> Asset Value:
-				<br>
-				<input type="number" id="asset" name="asset" value="">
-				<br> Risk Likelihood:
-				<br>
-				<input type="number" id="risk" name="risk" value="">
-				<br> Uncertainity:
-				<br>
-				<input type="number" id="uncertanity" name="uncertanity" value="">
-				<br> Control:
-				<br>
-				<input type="number" id="control" name="control" value="">
-				<br>
-				<br>
-				<input type="submit" value="Compute">
-				<label id="messageBox" generated="true" class="error"></label>
-				
-			</form>
-			<br>
-			<button id="refreshTraditional">Refresh!</button>
-			<br>
-			<p class="notice" id="traditionalText"></p>
+			<div id="traditionalCheck">
+				<h3>Traditional Method</h3>
+				<div id="traditionalTheory" class="theoryText">
+					This method utilizes the method proposed by Micheal Whitman which makes the calculation using the asset value, likelihood, control and the uncertainity proproerty of the asset.
+					<br> The calculation is done as:
+					<br><br>
+					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
+					<br>
+				</div>
+				<form id="traditionalForm">
+					<br> Device name:
+					<br>
+					<input type="text" id="deviceName" name="deviceName" value="">
+					<br> Asset Value:
+					<br>
+					<input type="number" id="asset" name="asset" value="">
+					<br> Risk Likelihood:
+					<br>
+					<input type="number" id="risk" name="risk" value="">
+					<br> Uncertainity:
+					<br>
+					<input type="number" id="uncertanity" name="uncertanity" value="">
+					<br> Control:
+					<br>
+					<input type="number" id="control" name="control" value="">
+					<br>
+					<br>
+					<input type="submit" value="Compute">
+					<br><br>
+					<label id="messageBox" generated="true" class="error"></label>
 
-		</div>
-		
-		<div id="gameTheoryCheck">
+				</form>
+				<br>
+				<button id="refreshTraditional">Refresh!</button>
+				<br><br>
+				<p class="notice" id="traditionalText"></p>
+				<div id="traditionalChartContainer"></div>
+
+			</div>
+
+			<div id="gameTheoryCheck">
 				<h3>GameTheory Method</h3>
-			<form id="gameTheoryForm">
-				<br> Asset Value:
+				<form id="gameTheoryForm">
+					<br> Device name:
+					<br>
+					<input type="text" id="deviceName" name="deviceName" value="">
+					<br> Asset Value:
+					<br>
+					<input type="number" id="asset" name="asset" value="">
+					<br> Risk Value:
+					<br>
+					<input type="number" id="risk" name="risk" value="">
+					<br> Uncertainity:
+					<br>
+					<input type="number" id="uncertanity" name="uncertanity" value="">
+					<br>
+					<br>
+					<input type="submit" value="Compute">
+					<label id="messageBox" generated="true" class="error"></label>
+
+				</form>
 				<br>
-				<input type="number" id="asset" name="asset" value="">
-				<br> Risk Value:
-				<br>
-				<input type="number" id="risk" name="risk" value="">
-				<br> Uncertainity:
-				<br>
-				<input type="number" id="uncertanity" name="uncertanity" value="">
-				<br>
-				<br>
-				<input type="submit" value="Compute">
-				<label id="messageBox" generated="true" class="error"></label>
+				<p class="notice" id="traditionalText"></p>
 				
-			</form>
-			<br>
-			<p class="notice" id="traditionalText"></p>
 
-		</div>
-		
-		
-		
-		<div id="mixedCheck">
+			</div>
+
+
+
+			<div id="mixedCheck">
 				<h3>Mixed Method</h3>
-			<form id="mixedForm">
-				<br> Asset Value:
+				<form id="mixedForm">
+					<br> Device name:
+					<br>
+					<input type="text" id="deviceName" name="deviceName" value="">
+					<br> Asset Value:
+					<br>
+					<input type="number" id="asset" name="asset" value="">
+					<br> Risk Value:
+					<br>
+					<input type="number" id="risk" name="risk" value="">
+					<br> Uncertainity:
+					<br>
+					<input type="number" id="uncertanity" name="uncertanity" value="">
+					<br>
+					<br>
+					<input type="submit" value="Compute">
+					<br>
+					<label id="messageBox" generated="true" class="error"></label>
+				</form>
 				<br>
-				<input type="number" id="asset" name="asset" value="">
-				<br> Risk Value:
-				<br>
-				<input type="number" id="risk" name="risk" value="">
-				<br> Uncertainity:
-				<br>
-				<input type="number" id="uncertanity" name="uncertanity" value="">
-				<br>
-				<br>
-				<input type="submit" value="Compute">
-				<label id="messageBox" generated="true" class="error"></label>
-			</form>
-			<br>
-			<p class="notice" id="traditionalText"></p>
+				<p class="notice" id="traditionalText"></p>
 
+			</div>
 		</div>
-		</div>
-		
-		
+
+
 	</div>
 
-	
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/fusioncharts.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+	<script src="js/fusioncharts-jquery-plugin.js"></script>
 
 
 	<script src="jquery-ui.js"></script>
@@ -236,133 +290,200 @@
 
 	<script>
 		//////////////////////////////////////////////////////
-		
-		$( document ).ready(function() {
-		
-		$("#traditionalCheck").hide();
-		$("#gameTheoryCheck").hide();
-		$("#mixedCheck").hide();
-		$("#refreshTraditional").click(function(){
-			$("#traditionalForm")[0].reset();
-			
-		});	
-		
-		jQuery('#myselect').on('change', (function () {
-			var value = $(this).val();
 
-			if (value == 1) {
-				$("#gameTheoryCheck").slideUp( 300, "swing");
-				$("#mixedCheck").slideUp( 300, "swing");
-				$("#traditionalCheck").slideDown( 300, "swing");
-				$("#traditionalForm").submit(function(){
-					//alert("submit clicked");
-					
-							 var isvalidate=$("#traditionalForm").valid();
-        			
-					if(isvalidate){
-					var riskScore = calculateTraditional();
-					$("#traditionalText").text("The risk score for given device is "+ riskScore );
+		$(document).ready(function () {
+
+			$("#traditionalCheck").hide();
+			$("#gameTheoryCheck").hide();
+			$("#mixedCheck").hide();
+			$("#traditionalTheory").hide();
+			$("#refreshTraditional").click(function () {
+				$("#traditionalForm")[0].reset();
+				$("#traditionalText").text("");
+				$("#messageBox").text("");
+				$("#traditionalChartContainer").hide();
+
+
+			});
+
+			jQuery('#myselect').on('change', (function () {
+				var value = $(this).val();
+
+				if (value == 1) {
+					$("#gameTheoryCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideUp(300, "swing");
+					$("#traditionalCheck").slideDown(300, "swing");
+					$("#traditionalTheory").hide();
+					$("#traditionalTheory").show("bounce", {
+						times: 2
+					}, "slow");
+
+					$("#traditionalForm").submit(function () {
+						//alert("submit clicked");
+
+						var isvalidate = $("#traditionalForm").valid();
+						
+
+						console.log(name);
+						if (isvalidate) {
+							var riskScore = calculateTraditional();
+							var name = $("#deviceName").val();
+							
+							$("#traditionalText").text("The risk score for given device is " + riskScore);
+							$("#traditionalChartContainer").show();
+							drawGauge(riskScore, name);
+						}
+					});
+
+
+
+					// calculate values
+
+					//display value
+					//calculateTraditional();
+				}
+
+				if (value == 2) {
+					$("#traditionalCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideUp(300, "swing");
+					$("#gameTheoryCheck").slideDown(300, "swing");
+					$("#traditionalForm").submit(function () {
+						//alert("submit clicked");
+						var riskScore = calculateTraditional();
+						$("#traditionalText").text("The risk score for given device is " + riskScore);
+					});
+
+
+				}
+				if (value == 3) {
+					$("#traditionalCheck").slideUp(300, "swing");
+					$("#gameTheoryCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideDown(300, "swing");
+					$("#traditionalForm").submit(function () {
+						//alert("submit clicked");
+						var riskScore = calculateTraditional();
+						$("#traditionalText").text("The risk score for given device is " + riskScore);
+					});
+
+
+				}
+
+			}));
+
+
+			
+			function drawGauge(riskScore, deviceName) {
+    
+    $("#traditionalChartContainer").insertFusionCharts({
+        type: 'angulargauge',
+        width: '400',
+        height: '250',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Traditional Risk Score",
+                "subcaption": deviceName,
+                "lowerLimit": "0",
+                "upperLimit": "100",
+                "lowerLimitDisplay": "Good",
+                "upperLimitDisplay": "Bad",
+                "showValue": "1",
+                "valueBelowPivot": "1",
+                "theme": "fint"
+            },
+            "colorRange": {
+                "color": [
+                    {
+                        "minValue": "0",
+                        "maxValue": "50",
+                        "code": "#6baa01"
+                    },
+                    {
+                        "minValue": "50",
+                        "maxValue": "75",
+                        "code": "#f8bd19"
+                    },
+                    {
+                        "minValue": "75",
+                        "maxValue": "100",
+                        "code": "#e44a00"
+                    }
+                ]
+            },
+            "dials": {
+                "dial": [{
+                    "value": riskScore
+                }]
+            }
+        }
+    }); 
+
+   
+        
+};
+
+			function calculateTraditional() {
+
+				var asset = $("#asset").val();
+				var risk = $("#risk").val();
+				var uncertanity = $("#uncertanity").val();
+				var control = $("#control").val();
+				var riskScore = (+risk * +asset) - ((+risk * +asset) * (+control / 100)) + ((+risk * +asset) * ((+uncertanity / 100)));
+				return (riskScore);
+				
+
+
+			}
+
+			// *** validators ***//
+
+			jQuery.validator.setDefaults({
+				debug: true
+				, success: "valid"
+				, errorClass: "my-error-class"
+				, validClass: "my-valid-class"
+
+
+			});
+
+			// validate form values
+			$("#traditionalForm").validate({
+
+				wrapper: 'div'
+				, errorLabelContainer: "#messageBox",
+
+				rules: {
+					asset: {
+						required: true
+						, range: [0, 100]
 					}
-				});
+					, risk: {
+						required: true
+						, range: [0, 1]
 
-				
+					}
+					, uncertanity: {
+						required: true
+						, range: [0, 100]
 
-				// calculate values
+					}
+					, control: {
+						required: true
+						, range: [0, 100]
 
-				//display value
-				//calculateTraditional();
-			}
-
-			if (value == 2) {
-				$("#traditionalCheck").slideUp( 300, "swing");
-				$("#mixedCheck").slideUp( 300, "swing");
-				$("#gameTheoryCheck").slideDown( 300, "swing");
-				$("#traditionalForm").submit(function(){
-					//alert("submit clicked");
-					var riskScore = calculateTraditional();
-					$("#traditionalText").text("The risk score for given device is "+ riskScore );
-				});
-
-
-			}
-			if (value == 3) {
-				$("#traditionalCheck").slideUp( 300, "swing");
-				$("#gameTheoryCheck").slideUp( 300, "swing");
-				$("#mixedCheck").slideDown( 300, "swing");
-				$("#traditionalForm").submit(function(){
-					//alert("submit clicked");
-					var riskScore = calculateTraditional();
-					$("#traditionalText").text("The risk score for given device is "+ riskScore );
-				});
-
-
-			}
-
-		}));
-		
-		
-		
-		function calculateTraditional(){
-			
-			 var asset = $("#asset").val();
-			var risk = $("#risk").val();
-			var uncertanity = $("#uncertanity").val();
-			var control=$("#control").val();
-			var riskScore = (+risk*+asset) -((+risk*+asset)*(+control/100))+((+risk*+asset)*((+uncertanity/100)));
-			return(riskScore);
-			
-			
-		}
-
-		// *** validators ***//
-
-		jQuery.validator.setDefaults({
-			debug: true
-			, success: "valid"
-			, errorClass: "my-error-class"
-			, validClass: "my-valid-class"
-
-
-		});
-		
-		// validate form values
-		$("#traditionalForm").validate({
-			
-			 wrapper: 'div',
-        	errorLabelContainer: "#messageBox",
-			
-			rules: {
-				asset: {
-					required: true,
-					range: [0, 100]
-				}
-				, risk: {
-					required: true,
-					range: [0, 1]
+					}
 
 				}
-				, uncertanity: {
-					required: true,
-					range: [0, 100]
+				, messages: {
 
+					asset: "Asset Value should be between 0-100"
+					, risk: "Risk Likelihood should be between 0-1"
+					, uncertanity: "Uncertanity should be between 0-100"
+					, control: "Control should be between 0-100"
 				}
-				, control: {
-					required: true,
-					range: [0, 100]
+			});
 
-				}
 
-			},
-			messages:{
-				
-				asset: "Asset Value should be between 0-100",
-				risk: "Risk Likelihood should be between 0-1",
-				uncertanity: "Uncertanity should be between 0-100",
-				control: "Control should be between 0-100"
-			}
-		});
-			
-			
 		});
 
 
@@ -403,6 +524,7 @@
 						$(this).dialog("close");
 					}
 		}
+
 
 				
 				, {
@@ -466,6 +588,9 @@
 			}
 		);
 	</script>
+	<hr>
+	<footer style="text-align:center">&copy; Bikrant Gautam bikrant.gautam@outlok.com</footer>
+
 </body>
 
 </html>
