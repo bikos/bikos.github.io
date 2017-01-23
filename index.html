@@ -180,7 +180,7 @@
 			<div id="traditionalCheck">
 				<h3>Traditional Method</h3>
 				<div id="traditionalTheory" class="theoryText">
-					This method utilizes the method proposed by Micheal Whitman which makes the calculation using the asset value, likelihood, control and the uncertainity proproerty of the asset.
+					This method utilizes the method proposed by Micheal Whitman which makes the calculation using the asset value, likelihood, control and the uncertainity property of the asset.
 					<br> The calculation is done as:
 					<br><br>
 					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
@@ -324,11 +324,9 @@
 						var isvalidate = $("#traditionalForm").valid();
 						
 
-						console.log(name);
 						if (isvalidate) {
 							var riskScore = calculateTraditional();
 							var name = $("#deviceName").val();
-							
 							$("#traditionalText").text("The risk score for given device is " + riskScore);
 							$("#traditionalChartContainer").show();
 							drawGauge(riskScore, name);
@@ -589,8 +587,14 @@
 		);
 	</script>
 	<hr>
-	<footer style="text-align:center">&copy; Bikrant Gautam bikrant.gautam@outlok.com</footer>
-
+	<footer style="text-align:center">&copy; Bikrant Gautam bikrant.gautam@outlok.com/bgautam1@stcloudstate.edu<br>
+		
+		<br><img src="Logo_StCloudState.png"><br><br>
+	
+	
+		Developed for the partial fullfillment of starred paper entitled "Improving risk scoring method using game theory" to the Masters of Science in Information Assurance at Saint Cloud State University.
+</footer><br>
+	
 </body>
 
 </html>
