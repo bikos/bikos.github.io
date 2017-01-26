@@ -96,8 +96,7 @@
 		}
 		
 		.theoryText {
-			background: #e8c951;
-			color: #685206;
+			background: #649991;
 			font-family: 'Helvetica Neue', sans-serif;
 			font-size: 22px;
 			line-height: 24px;
@@ -141,6 +140,7 @@
 			border: none;
 			padding: 5px 5px;
 			border: 2px solid #456879;
+			border-radius: 10px;
 		}
 		
 		.myButton {
@@ -151,7 +151,7 @@
 		
 		form {
 			padding: 20px;
-			background: #b5a03b;
+			background: #779fa3;
 			color: #fff;
 			-moz-border-radius: 4px;
 			-webkit-border-radius: 4px;
@@ -257,7 +257,7 @@
 
 			<div id="gameTheoryCheck">
 				<h3>Game Theory Method</h3>
-				<div id="gameTheoryTheory" class="theoryText" style="text-align:center">
+				<div id="gameTheoryTheory" class="theoryText" style="text-align:center; background:#649991;">
 					The method attempts at implementing a competitive mixed strategy game theory in risk analysis for IT risk management. A  The objective of this calculation is to set an example of how implementation of game theory could substantially help the security professionals to make decision over the resource allocation for the ever changing vulnerability pertaining to IT field.
 					<br>
 					The visualization and the charts generated after calculation helps the security experts to make rational decision over the resource allocation. 
@@ -336,7 +336,7 @@
 					<div id="defendProbability" style="display:inline;"></div>
 					<br>
 					<div id="radarChart"></div>
-					<br>
+					<br><br>
 					<div id="gameFinalText" class="gameConclusion"></div>
 				</div>
 
@@ -523,8 +523,8 @@
 							drawRadar(PA, PAnot, PD, PDnot, name1, name2);
 							$("#gameFinalText").show();
 							$("#gameFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
-								"</span>should be allocated <span class=\"myButton\"> " + PA + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
-								"</span>should be allocated <span class=\"myButton\">" + PAnot + "%</span> of the available resources.</p>");
+								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
 						}
 
 						event.preventDefault();
