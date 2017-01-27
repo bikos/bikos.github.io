@@ -627,8 +627,8 @@
 							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
 							$("#gameFinalText").show();
 							$("#gameFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
-								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
-								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
+								"</span> should be allocated <span class=\"myButton\"> " + (PA*100).toFixed(2) + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + (PAnot*100).toFixed(2) + "%</span> of the available resources.</p>");
 						
 							
 						}
@@ -720,7 +720,7 @@
 							
 							$("#traditionalText2").html("<h3>Conclusion</h3>"+
 														"<h5>Combining the two methods: traditional and mixed approach, we can identify and allocate resources for the best outcome with given constraints. We know that  the device: "+
-		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  PA*100 +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  PAnot*100 +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
+		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PA*100).toFixed(2) +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PAnot*100).toFixed(2) +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
 							
 						}
 						
