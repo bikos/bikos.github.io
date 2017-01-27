@@ -193,12 +193,14 @@
 
 <body>
 
-	<h1 style="text-align:center">Game Theory Based Risk Computation</h1>
+	<h1 style="text-align:center">Game Theory Based Risk Computation and Resource Allocation</h1>
+	<p>The security of the computer network has become a challenging task with ever increasing attacks against it. The problem that lies ahead of the management and security administrator is to allocate the resources in accordance with the pitfalls in their network system. While traditional risk analysis can provide them the rough idea of what needs to be protected, an efficient method is imperative to plan the resources to tackle the incoming attacks in more dynamic way. This project is the result of similar study which focussed on modelling a traditional IT risk case into a mixed strategy game and help the security professionals to calculate and place their resources against the intruders with the help of game theory. The added advantage it provides over the traditional risk analysis is that, it helps the administrator to re-allocate resources for the required level of safety for their assets. Thuis research paves a way for converting existing IT risk analysis into a more robust logic based analysis which could prove beneficial in planning real world IT risk analysis and resource allocation.</p>
 
 	<div class="ui-widget" style="text-align:center">
-		<p>Please use this interface to compare and contrast the different risk scoring methods. Please click any of the options avialable from the drop down menu</p>
-
+		
 		<h2 class="demoHeaders">Risk Computation Menu</h2>
+		<p>Please use this interface to compare and contrast the different risk scoring methods. Please click any of the options avialable from the drop down menu below.</p>
+
 
 		<div>
 			<select id="myselect">
@@ -251,14 +253,14 @@
 				<br>
 				<br>
 				<p class="notice" id="traditionalText"></p>
-				<div id="traditionalChartContainer"></div>
+				<div id="gaugeContainer"></div>
 
 			</div>
 
 			<div id="gameTheoryCheck">
 				<h3>Game Theory Method</h3>
 				<div id="gameTheoryTheory" class="theoryText" style="text-align:center; background:#649991;">
-					The method attempts at implementing a competitive mixed strategy game theory in risk analysis for IT risk management. A  The objective of this calculation is to set an example of how implementation of game theory could substantially help the security professionals to make decision over the resource allocation for the ever changing vulnerability pertaining to IT field.
+					This method attempts at implementing a competitive mixed strategy game theory in risk analysis for IT risk management. A  The objective of this calculation is to set an example of how implementation of game theory could substantially help the security professionals to make decision over the resource allocation for the ever changing vulnerability pertaining to IT field.
 					<br>
 					The visualization and the charts generated after calculation helps the security experts to make rational decision over the resource allocation. 
 
@@ -339,34 +341,118 @@
 					<br><br>
 					<div id="gameFinalText" class="gameConclusion"></div>
 				</div>
+				
 
 			</div>
 
 
 
 			<div id="mixedCheck">
-				<h3>Mixed Method</h3>
-				<form id="mixedForm">
-					<br> Device name:
+				<h3>Mix Strategy</h3>
+				<div id="mixedStrategy" class="theoryText" style="text-align:center; background:#649991;">
+					This method is the proposed method where the traditional risk scoring is combined with resources allocation as suggested by the computation of competitive game between the attacker and the defender. The numeric values drawn after the computation provides various methods of visualization which will help the security administrator to monitor and defend their perimeter more efficiently. 
+					<hr>
+					The calculation for traditional risk scoring is done as:
 					<br>
-					<input type="text" id="deviceName" name="deviceName" value="">
-					<br> Asset Value:
+					
+					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
 					<br>
-					<input type="number" id="asset" name="asset" value="">
-					<br> Risk Value:
+					<hr>
+					
+					The game matrix for attacker and defender is constructed as:
 					<br>
-					<input type="number" id="risk" name="risk" value="" step="100">
-					<br> Uncertainity:
+					<img src="gameMatrix.PNG" align:center>
 					<br>
-					<input type="number" id="uncertanity" name="uncertanity" value="">
+					The attack defense probability for the respective devices are calculated as:
 					<br>
+					<img src="defenseFormula.PNG">
 					<br>
+					<img src="paFormula.PNG">
+					<br>
+				</div>
+
+				<form id="mixedForm" method="post">
+					<table id="mixedTable" style="margin: 0px auto; border-spacing: 30px;">
+						<tr>
+							<td>
+								<h3> Device 1 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName3" name="deviceName3" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset3" name="asset3" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk3" name="risk3" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity3" name="uncertanity3" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control3" name="control3" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+
+							<td>
+								<h3> Device 2 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName4" name="deviceName4" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset4" name="asset4" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk4" name="risk4" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity4" name="uncertanity4" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control4" name="control4" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+						</tr>
+
+					</table>
 					<input type="submit" value="Compute">
-					<br>
-					<label id="messageBox" generated="true" class="error"></label>
+
 				</form>
+				<div id="gameMessageBox" generated="true" class="error"></div>
+
+
 				<br>
-				<p class="notice" id="traditionalText"></p>
+				<button id="refreshMixed">Refresh!</button>
+				<br>
+				<br>
+				<p class="notice" id="mixedText" style="text-align:center"></p>
+				<div id="mixedChartContainer">
+					<div id="attackProbabilityMixed" style="display:inline;"></div>
+					<div id="defendProbabilityMixed" style="display:inline;"></div>
+					<br><br>
+					<div id="radarChartMixed" style="padding-top:10px"><br><br></div>
+					
+					<br><br>
+					
+					<div id="mixedFinalText" class="gameConclusion"></div>
+					
+					<br><br>
+					
+					<div id="gaugeContainer">
+						<div id="gauge1" style="display:inline;"></div>
+						<div id="gauge2" style="display:inline;"></div>
+						
+					</div>
+					
+					<br>
+					<div id="traditionalTextContainer">
+						<div id="traditionalText1" class=notice style="background:#589977"></div>
+					<div id="traditionalText2"></div>
+					</div>
+				</div>
 
 			</div>
 		</div>
@@ -396,11 +482,13 @@
 			$("#mixedCheck").hide();
 			$("#traditionalTheory").hide();
 			$("#gameFinalText").hide();
+			$("#mixedFinalText").hide();
+			$("#traditionalText1").hide();
 			$("#refreshTraditional").click(function () {
 				$("#traditionalForm")[0].reset();
 				$("#traditionalText").text("");
 				$("#messageBox").text("");
-				$("#traditionalChartContainer").hide();
+				$("#gaugeContainer").hide();
 
 
 			});
@@ -412,6 +500,15 @@
 				$("#gameFinalText").hide();
 				$("#gameMessageBox").text("");
 				$("#gameChartContainer").hide();
+			});
+			
+			$("#refreshMixed").click(function () {
+				$("#mixedForm")[0].reset();
+				$("#gameText").text("");
+				$("#gameFinalText").hide();
+				$("#gameMessageBox").text("");
+				$("#mixedChartContainer").hide();
+				$("#mixedText").hide();
 			});
 
 
@@ -434,6 +531,7 @@
 
 
 						if (isvalidate) {
+							var locationGauge = "#gaugeContainer";
 
 							var name = $("#deviceName").val();
 							var asset = $("#asset").val();
@@ -443,8 +541,8 @@
 
 							var riskScore = calculateTraditional(+asset, +risk / 100, +control, +uncertanity);
 							$("#traditionalText").text("The risk score for given device is " + riskScore);
-							$("#traditionalChartContainer").slideDown(300, "swing");
-							drawGauge(riskScore, name);
+							$("#gaugeContainer").slideDown(300, "swing");
+							drawGauge(riskScore, name, locationGauge);
 						}
 					});
 
@@ -467,6 +565,7 @@
 					$("#gameForm").submit(function (event) {
 						var isvalidate = $("#gameForm").valid();
 						if (isvalidate) {
+							console.log("works so far");
 
 							var name1 = $("#deviceName1").val();
 							var asset1 = $("#asset1").val();
@@ -501,9 +600,13 @@
 							location2 = "#defendProbability";
 							caption1 = "Attack probabiliy Distribution";
 							caption2 = "Defend probabailty Distribution";
+							locationDiv = "#radarChart";
+							
 
 
 							var riskScore = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+							
+							
 
 							$("#gameText").html("<h3>The risk matrix for given sets of devices is</h3>" +
 								"<table align=\"center\" style=\"border: 1px solid black; text-align:center\"><tr><th></th><th class=\"tableRed\">" + name1 + "</th><th class=\"tableRed\">" + name2 + "</th></tr>" +
@@ -516,15 +619,18 @@
 
 
 							//												riskScore + AttackUnfav + Afav + Aunfav + Attacfav);
+							
 
 							$("#gameChartContainer").slideDown(300, "swing");
 							drawGame(PA, PAnot, name1, name2, location1, caption1);
 							drawGame(PD, PDnot, name1, name2, location2, caption2);
-							drawRadar(PA, PAnot, PD, PDnot, name1, name2);
+							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
 							$("#gameFinalText").show();
 							$("#gameFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
 								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
 								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
+						
+							
 						}
 
 						event.preventDefault();
@@ -537,10 +643,88 @@
 					$("#traditionalCheck").slideUp(300, "swing");
 					$("#gameTheoryCheck").slideUp(300, "swing");
 					$("#mixedCheck").slideDown(300, "swing");
-					$("#traditionalForm").submit(function () {
-						//alert("submit clicked");
-						var riskScore = calculateTraditional();
-						$("#traditionalText").text("The risk score for given device is " + riskScore.toFixed(2));
+					$("#mixedForm").submit(function (event) {
+						
+						var isvalidate = $("#mixedForm").valid();
+						if (isvalidate) {
+
+							var name1 = $("#deviceName3").val();
+							var asset1 = $("#asset3").val();
+							var risk1 = $("#risk3").val();
+							var uncertanity1 = $("#uncertanity3").val();
+							var control1 = $("#control3").val();
+
+
+							var Afav = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+							var AttackUnfav = -10 - Afav;
+							var Aunfav = 0 - (+asset1);
+							var Attacfav = (+asset1) - 10;
+
+							var name2 = $("#deviceName4").val();
+							var asset2 = $("#asset4").val();
+							var risk2 = $("#risk4").val();
+							var uncertanity2 = $("#uncertanity4").val();
+							var control2 = $("#control4").val();
+
+							var Bfav = calculateTraditional(+asset2, +risk2 / 100, +control2, +uncertanity2);
+							var BttackUnfav = -10 - Bfav;
+							var Bunfav = 0 - (+asset2);
+							var Bttacfav = (+asset2) - 10;
+
+							var PD = (BttackUnfav - Attacfav) / ((BttackUnfav - Attacfav) + (AttackUnfav - Bttacfav));
+							PD = PD.toFixed(2);
+							var PDnot = 1 - PD;
+							var PA = (Bfav - Bunfav) / ((Bfav - Bunfav) + (Afav - Aunfav));
+							PA = PA.toFixed(2);
+							var PAnot = 1 - PA;
+							location1 = "#attackProbabilityMixed";
+							location2 = "#defendProbabilityMixed";
+							caption1 = "Attack probabiliy Distribution";
+							caption2 = "Defend probabailty Distribution";
+							locationDiv = "#radarChartMixed";
+							locationGauge1 ="#gauge1";
+							locationGauge2 ="#gauge2";
+
+
+							var riskScore = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+
+							$("#mixedText").html("<h3>The risk matrix for given sets of devices is</h3>" +
+								"<table align=\"center\" style=\"border: 1px solid black; text-align:center\"><tr><th></th><th class=\"tableRed\">" + name1 + "</th><th class=\"tableRed\">" + name2 + "</th></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name1 + "</td><td class=\"tableCell\">" + Afav.toFixed(2) + " " + AttackUnfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bunfav.toFixed(2) + " " + Bttacfav.toFixed(2) + "</td></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name2 + "</td><td class=\"tableCell\">" + Aunfav.toFixed(2) + " " + Attacfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bfav.toFixed(2) + " " + BttackUnfav.toFixed(2) + "</td></tr></table><br><br>" +
+								"<p class=\"gameResultFinal\">Defense Probability of device: " + name1 + " is " + PD + "<br> Defense Probability of device: " + name2 + " is " + (1 - PD).toFixed(2) + "</p><br>" +
+								"<p class=\"gameResultFinal\">Attack Probability on device: " + name1 + " is " + PA + "<br> Attack Probability on device: " + name2 + " is " + (1 - PA).toFixed(2) + "</p><br>");
+
+
+							//												riskScore + AttackUnfav + Afav + Aunfav + Attacfav);
+							//$("#mixedChartContainer").show();
+							$("#mixedChartContainer").slideDown(300, "swing");
+							$("#gameFinalText").show();
+							$("#mixedText").show();
+							$("#traditionalText1").show();
+							drawGame(PA, PAnot, name1, name2, location1, caption1);
+							drawGame(PD, PDnot, name1, name2, location2, caption2);
+							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
+							$("#mixedFinalText").show();
+							$("#mixedFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
+								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
+						
+							drawGauge(+Afav, name1, locationGauge1);
+							drawGauge(+Bfav, name2, locationGauge2);
+							$("#traditionalText1").html("<p style=\"line-height: 30px;\">The risk score of device: <span class=\"myButton\">" + name1 +
+								"</span> is <span class=\"myButton\"> " + Afav.toFixed(2) + "</span> <br><br> The risk score of device: <span class=\"myButton\">" + name2 +
+								"</span> is <span class=\"myButton\"> " + Bfav.toFixed(2) + "</span> </p>");
+							
+							$("#traditionalText2").html("<h3>Conclusion</h3>"+
+														"<h5>Combining the two methods: traditional and mixed approach, we can identify and allocate resources for the best outcome with given constraints. We know that  the device: "+
+		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  PA*100 +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  PAnot*100 +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
+							
+						}
+						
+						event.preventDefault();
 					});
 
 
@@ -550,9 +734,9 @@
 
 
 
-			function drawGauge(riskScore, deviceName) {
+			function drawGauge(riskScore, deviceName, locationGauge) {
 
-				$("#traditionalChartContainer").insertFusionCharts({
+				$(locationGauge).insertFusionCharts({
 					type: 'angulargauge'
 					, width: '400'
 					, height: '250'
@@ -645,9 +829,10 @@
 
 			};
 
-			function drawRadar(PA, PAnot, PD, PDnot, name1, name2) {
+			function drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv) {
 
-				$("#radarChart").insertFusionCharts({
+				
+				$(locationDiv).insertFusionCharts({
 					type: 'radar'
 					, width: '500'
 					, height: '350'
