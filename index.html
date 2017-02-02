@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<!-- saved from url=(0023)http://bikos.github.io/ -->
-<html lang="us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
+<!doctype html>
+<html lang="us">
+
+<head>
+	<meta charset="utf-8">
 	<title>IT Risk Calculator</title>
-	<link href="./IT Risk Calculator_files/jquery-ui.css" rel="stylesheet">
+	<link href="jquery-ui.css" rel="stylesheet">
 	<style>
 		body {
 			font-family: "Trebuchet MS", sans-serif;
@@ -203,7 +204,7 @@
 
 		<div>
 			<select id="myselect">
-				<option selected="" disabled="">Select one option</option>
+				<option selected disabled>Select one option</option>
 				<option value="1">Traditional</option>
 				<option value="2">Game Theory</option>
 				<option value="3">Mixed</option>
@@ -213,9 +214,9 @@
 		<br>
 
 		<div id="computationArea">
-			<div id="traditionalCheck" style="display: none;">
+			<div id="traditionalCheck">
 				<h3>Traditional Method</h3>
-				<div id="traditionalTheory" class="theoryText" style="display: none;">
+				<div id="traditionalTheory" class="theoryText">
 					This method utilizes the method proposed by Micheal Whitman which makes the calculation using the asset value, likelihood, control and the uncertainity property of the asset.
 					<br> The calculation is done as:
 					<br>
@@ -223,20 +224,20 @@
 					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
 					<br>
 				</div>
-				<form id="traditionalForm" novalidate="novalidate">
+				<form id="traditionalForm">
 					<br> Device name:
 					<br>
 					<input type="text" id="deviceName" name="deviceName" value="">
-					<br> Asset Value: (Values from 0 - 100)
+					<br> Asset Value:
 					<br>
 					<input type="number" id="asset" name="asset" value="">
-					<br> Risk Likelihood: (Values from 0 - 100)
+					<br> Risk Likelihood:
 					<br>
 					<input type="number" id="risk" name="risk" value="">
-					<br> Uncertainity: (Values from 0 - 100)
+					<br> Uncertainity:
 					<br>
 					<input type="number" id="uncertanity" name="uncertanity" value="">
-					<br> Control: (Values from 0 - 100)
+					<br> Control:
 					<br>
 					<input type="number" id="control" name="control" value="">
 					<br>
@@ -245,7 +246,6 @@
 					<br>
 					<br>
 					<label id="messageBox" generated="true" class="error"></label>
-					<h4>Note: The input values are normalized on scale of 0-100 for the ease of usage.</h4>
 
 				</form>
 				<br>
@@ -257,7 +257,7 @@
 
 			</div>
 
-			<div id="gameTheoryCheck" style="display: none;">
+			<div id="gameTheoryCheck">
 				<h3>Game Theory Method</h3>
 				<div id="gameTheoryTheory" class="theoryText" style="text-align:center; background:#649991;">
 					This method attempts at implementing a competitive mixed strategy game theory in risk analysis for IT risk management. A  The objective of this calculation is to set an example of how implementation of game theory could substantially help the security professionals to make decision over the resource allocation for the ever changing vulnerability pertaining to IT field.
@@ -266,35 +266,35 @@
 
 					<br> The game matrix for attacker and defender is constructed as:
 					<br>
-					<img src="./IT Risk Calculator_files/gameMatrix.PNG" align:center="">
+					<img src="gameMatrix.PNG" align:center>
 					<br> The attack defense probability for the respective devices are calculated as:
 					<br>
-					<img src="./IT Risk Calculator_files/defenseFormula.PNG">
+					<img src="defenseFormula.PNG">
 					<br>
-					<img src="./IT Risk Calculator_files/paFormula.PNG">
+					<img src="paFormula.PNG">
 					<br>
 				</div>
 
 				<form id="gameForm" method="post">
 					<table id="gameTable" style="margin: 0px auto; border-spacing: 30px;">
-						<tbody><tr>
+						<tr>
 							<td>
 								<h3> Device 1 </h3>
 								<br> Device name:
 								<br>
-								<input class="my-valid-class" type="text" id="deviceName1" name="deviceName1" value="" required="" size="35">
-								<br> Asset Value: (Values from 0 - 100)
+								<input class="my-valid-class" type="text" id="deviceName1" name="deviceName1" value="" required size="35">
+								<br> Asset Value:
 								<br>
-								<input class="my-valid-class" type="number" id="asset1" name="asset1" value="" required="" min="0" max="100">
-								<br> Risk Likelihood: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="asset1" name="asset1" value="" required min=0 max=100>
+								<br> Risk Likelihood:
 								<br>
-								<input class="my-valid-class" type="number" id="risk1" name="risk1" value="" required="" min="1" max="100">
-								<br> Uncertainity: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="risk1" name="risk1" value="" required min=1 max=100>
+								<br> Uncertainity:
 								<br>
-								<input class="my-valid-class" type="number" id="uncertanity1" name="uncertanity1" value="" required="" min="0" max="100">
-								<br> Control/Resources: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="uncertanity1" name="uncertanity1" value="" required min=0 max=100>
+								<br> Control/Resources:
 								<br>
-								<input class="my-valid-class" type="number" id="control1" name="control1" value="" required="" min="0" max="100">
+								<input class="my-valid-class" type="number" id="control1" name="control1" value="" required min=0 max=100>
 								<br>
 								<br>
 							</td>
@@ -303,27 +303,27 @@
 								<h3> Device 2 </h3>
 								<br> Device name:
 								<br>
-								<input class="my-valid-class" type="text" id="deviceName2" name="deviceName2" value="" required="" size="35">
-								<br> Asset Value: (Values from 0 - 100)
+								<input class="my-valid-class" type="text" id="deviceName2" name="deviceName2" value="" required size="35">
+								<br> Asset Value:
 								<br>
-								<input class="my-valid-class" type="number" id="asset2" name="asset2" value="" required="" min="0" max="100">
-								<br> Risk Likelihood: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="asset2" name="asset2" value="" required min=0 max=100>
+								<br> Risk Likelihood:
 								<br>
-								<input class="my-valid-class" type="number" id="risk2" name="risk2" value="" required="" min="1" max="100">
-								<br> Uncertainity: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="risk2" name="risk2" value="" required min=1 max=100>
+								<br> Uncertainity:
 								<br>
-								<input class="my-valid-class" type="number" id="uncertanity2" name="uncertanity2" value="" required="" min="0" max="100">
-								<br> Control/Resources: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="uncertanity2" name="uncertanity2" value="" required min=0 max=100>
+								<br> Control/Resources:
 								<br>
-								<input class="my-valid-class" type="number" id="control2" name="control2" value="" required="" min="0" max="100">
+								<input class="my-valid-class" type="number" id="control2" name="control2" value="" required min=0 max=100>
 								<br>
 								<br>
 							</td>
 						</tr>
 
-					</tbody></table>
+					</table>
 					<input type="submit" value="Compute">
-					<h4>Note: The input values are normalized on scale of 0-100 for the ease of usage.</h4>
+
 				</form>
 				<div id="gameMessageBox" generated="true" class="error"></div>
 
@@ -339,7 +339,7 @@
 					<br>
 					<div id="radarChart"></div>
 					<br><br>
-					<div id="gameFinalText" class="gameConclusion" style="display: none;"></div>
+					<div id="gameFinalText" class="gameConclusion"></div>
 				</div>
 				
 
@@ -347,7 +347,7 @@
 
 
 
-			<div id="mixedCheck" style="display: none;">
+			<div id="mixedCheck">
 				<h3>Mix Strategy</h3>
 				<div id="mixedStrategy" class="theoryText" style="text-align:center; background:#649991;">
 					This method is the proposed method where the traditional risk scoring is combined with resources allocation as suggested by the computation of competitive game between the attacker and the defender. The numeric values drawn after the computation provides various methods of visualization which will help the security administrator to monitor and defend their perimeter more efficiently. 
@@ -361,65 +361,65 @@
 					
 					The game matrix for attacker and defender is constructed as:
 					<br>
-					<img src="./IT Risk Calculator_files/gameMatrix.PNG" align:center="">
+					<img src="gameMatrix.PNG" align:center>
 					<br>
 					The attack defense probability for the respective devices are calculated as:
 					<br>
-					<img src="./IT Risk Calculator_files/defenseFormula.PNG">
+					<img src="defenseFormula.PNG">
 					<br>
-					<img src="./IT Risk Calculator_files/paFormula.PNG">
+					<img src="paFormula.PNG">
 					<br>
 				</div>
 
 				<form id="mixedForm" method="post">
 					<table id="mixedTable" style="margin: 0px auto; border-spacing: 30px;">
-						<tbody><tr>
+						<tr>
 							<td>
 								<h3> Device 1 </h3>
-								<br> Device name: 
+								<br> Device name:
 								<br>
-								<input class="my-valid-class" type="text" id="deviceName3" name="deviceName3" value="" required="" size="35">
-								<br> Asset Value: (Values from 0 - 100)
+								<input class="my-valid-class" type="text" id="deviceName3" name="deviceName3" value="" required size="35">
+								<br> Asset Value:
 								<br>
-								<input class="my-valid-class" type="number" id="asset3" name="asset3" value="" required="" min="0" max="100">
-								<br> Risk Likelihood: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="asset3" name="asset3" value="" required min=0 max=100>
+								<br> Risk Likelihood:
 								<br>
-								<input class="my-valid-class" type="number" id="risk3" name="risk3" value="" required="" min="1" max="100">
-								<br> Uncertainity: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="risk3" name="risk3" value="" required min=1 max=100>
+								<br> Uncertainity:
 								<br>
-								<input class="my-valid-class" type="number" id="uncertanity3" name="uncertanity3" value="" required="" min="0" max="100">
-								<br> Control/Resources: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="uncertanity3" name="uncertanity3" value="" required min=0 max=100>
+								<br> Control/Resources:
 								<br>
-								<input class="my-valid-class" type="number" id="control3" name="control3" value="" required="" min="0" max="100">
+								<input class="my-valid-class" type="number" id="control3" name="control3" value="" required min=0 max=100>
 								<br>
 								<br>
 							</td>
 
 							<td>
 								<h3> Device 2 </h3>
-								<br> Device name: 
+								<br> Device name:
 								<br>
-								<input class="my-valid-class" type="text" id="deviceName4" name="deviceName4" value="" required="" size="35">
-								<br> Asset Value: (Values from 0 - 100)
+								<input class="my-valid-class" type="text" id="deviceName4" name="deviceName4" value="" required size="35">
+								<br> Asset Value:
 								<br>
-								<input class="my-valid-class" type="number" id="asset4" name="asset4" value="" required="" min="0" max="100">
-								<br> Risk Likelihood: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="asset4" name="asset4" value="" required min=0 max=100>
+								<br> Risk Likelihood:
 								<br>
-								<input class="my-valid-class" type="number" id="risk4" name="risk4" value="" required="" min="1" max="100">
-								<br> Uncertainity: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="risk4" name="risk4" value="" required min=1 max=100>
+								<br> Uncertainity:
 								<br>
-								<input class="my-valid-class" type="number" id="uncertanity4" name="uncertanity4" value="" required="" min="0" max="100">
-								<br> Control/Resources: (Values from 0 - 100)
+								<input class="my-valid-class" type="number" id="uncertanity4" name="uncertanity4" value="" required min=0 max=100>
+								<br> Control/Resources:
 								<br>
-								<input class="my-valid-class" type="number" id="control4" name="control4" value="" required="" min="0" max="100">
+								<input class="my-valid-class" type="number" id="control4" name="control4" value="" required min=0 max=100>
 								<br>
 								<br>
 							</td>
 						</tr>
 
-					</tbody></table>
+					</table>
 					<input type="submit" value="Compute">
-					<h4>Note: The input values are normalized on scale of 0-100 for the ease of usage.</h4>
+
 				</form>
 				<div id="gameMessageBox" generated="true" class="error"></div>
 
@@ -437,7 +437,7 @@
 					
 					<br><br>
 					
-					<div id="mixedFinalText" class="gameConclusion" style="display: none;"></div>
+					<div id="mixedFinalText" class="gameConclusion"></div>
 					
 					<br><br>
 					
@@ -449,7 +449,7 @@
 					
 					<br>
 					<div id="traditionalTextContainer">
-						<div id="traditionalText1" class="notice" style="background: rgb(88, 153, 119); display: none;"></div>
+						<div id="traditionalText1" class=notice style="background:#589977"></div>
 					<div id="traditionalText2"></div>
 					</div>
 				</div>
@@ -461,15 +461,15 @@
 	</div>
 
 
-	<script src="./IT Risk Calculator_files/jquery.min.js.download"></script>
-	<script src="./IT Risk Calculator_files/jquery-ui.js.download"></script>
-	<script type="text/javascript" src="./IT Risk Calculator_files/fusioncharts.js.download"></script>
-	<script src="./IT Risk Calculator_files/jquery.validate.min.js.download"></script>
-	<script src="./IT Risk Calculator_files/additional-methods.min.js.download"></script>
-	<script src="./IT Risk Calculator_files/fusioncharts-jquery-plugin.js.download"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/fusioncharts.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+	<script src="js/fusioncharts-jquery-plugin.js"></script>
 
 
-	<script src="./IT Risk Calculator_files/jquery-ui.js(1).download"></script>
+	<script src="jquery-ui.js"></script>
 
 
 	<script>
@@ -627,8 +627,8 @@
 							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
 							$("#gameFinalText").show();
 							$("#gameFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
-								"</span> should be allocated <span class=\"myButton\"> " + (PAnot*100).toFixed(2) + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
-								"</span> should be allocated <span class=\"myButton\">" + (PA*100).toFixed(2) + "%</span> of the available resources.</p>");
+								"</span> should be allocated <span class=\"myButton\"> " + (PA*100).toFixed(2) + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + (PAnot*100).toFixed(2) + "%</span> of the available resources.</p>");
 						
 							
 						}
@@ -709,8 +709,8 @@
 							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
 							$("#mixedFinalText").show();
 							$("#mixedFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
-								"</span> should be allocated <span class=\"myButton\"> " + (PAnot*100).toFixed(2) + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
-								"</span> should be allocated <span class=\"myButton\">" + (PA*100).toFixed(2) + "%</span> of the available resources.</p>");
+								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
 						
 							drawGauge(+Afav, name1, locationGauge1);
 							drawGauge(+Bfav, name2, locationGauge2);
@@ -720,7 +720,7 @@
 							
 							$("#traditionalText2").html("<h3>Conclusion</h3>"+
 														"<h5>Combining the two methods: traditional and mixed approach, we can identify and allocate resources for the best outcome with given constraints. We know that  the device: "+
-		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PAnot*100).toFixed(2) +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PA*100).toFixed(2) +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
+		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PA*100).toFixed(2) +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PAnot*100).toFixed(2) +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
 							
 						}
 						
@@ -1052,16 +1052,15 @@
 	<footer style="text-align:center">
 		<br>
 
-		<br><img src="./IT Risk Calculator_files/Logo_StCloudState.png">
+		<br><img src="Logo_StCloudState.png">
 		<br>
-		<br> Developed for the partial fullfillment of starred paper entitled <b>Improving IT Risk Analysis with Resource Allocation
-</b> to the Department of <b>Masters of Science in Information Assurance</b> at Saint Cloud State University, 2017.
+		<br> Developed for the partial fullfillment of starred paper entitled <b>Improving risk scoring method using game theory</b> to the Department of <b>Masters of Science in Information Assurance</b> at Saint Cloud State University, 2017.
 		<br><br>
-		<p style="font-size:14px">☎ Bikrant Gautam, MSIA, Saint Cloud State University, bikrant.gautam@outlook.com/bgautam1@stcloudstate.edu
-		</p><p style="font-size:10px">Developed using <a href="https://jqueryui.com/">jqueryUI</a>, <a href="https://jquery.com/">Jquery</a> and <a href="http://www.fusioncharts.com/">fusionChart</a> with their free/public versions.</p>
+		<p style="font-size:14px">&#x260E; Bikrant Gautam, MSIA, Saint Cloud State University, bikrant.gautam@outlook.com/bgautam1@stcloudstate.edu</pp>
+		<p style="font-size:10px">Developed using <a href="https://jqueryui.com/">jqueryUI</a>, <a href="https://jquery.com/">Jquery</a> and <a href="http://www.fusioncharts.com/">fusionChart</a> with their free/public versions.</p>
 	</footer>
 	<br>
 
+</body>
 
-
-</body></html>
+</html>
