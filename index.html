@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="us">
+
+<head>
+	<meta charset="utf-8">
+	<title>IT Risk Calculator</title>
+	<link href="jquery-ui.css" rel="stylesheet">
+	<style>
+		body {
+			font-family: "Trebuchet MS", sans-serif;
+			margin: 50px;
+		}
+		
+		.demoHeaders {
+			margin-top: 2em;
+		}
+		
+		#dialog-link {
+			padding: .4em 1em .4em 20px;
+			text-decoration: none;
+			position: relative;
+		}
+		
+		#dialog-link span.ui-icon {
+			margin: 0 5px 0 0;
+			position: absolute;
+			left: .2em;
+			top: 50%;
+			margin-top: -8px;
+		}
+		
+		#icons {
+			margin: 0;
+			padding: 0;
+		}
+		
+		#icons li {
+			margin: 2px;
+			position: relative;
+			padding: 4px 0;
+			cursor: pointer;
+			float: left;
+			list-style: none;
+		}
+		
+		#icons span.ui-icon {
+			float: left;
+			margin: 0 4px;
+		}
+		
+		.fakewindowcontain .ui-widget-overlay {
+			position: absolute;
+		}
+		
+		.my-error-class {
+			color: black;
+			font-style: italic;
+			font-size: 18px;
+			/* red */
+		}
+		
+		.my-valid-class {
+			color: #00CC00;
+			font-style: x-large;
+			text-align: center;
+			/* green */
+		}
+		
+		.formulaBlock {
+			background: #b8c1d1;
+			color: black;
+			border: 2px solid #456879;
+			border-radius: 20px;
+			width: 640px;
+			height: auto;
+			margin: auto;
+			position: relative;
+			text-align: center;
+			width: 40%;
+		}
+		
+		select.error,
+		textarea.error,
+		input.error {
+			color: #FF0000;
+		}
+		
+		.notice {
+			background: #5ca8a1;
+			color: black;
+			font-size: x-large;
+			font-style: bold;
+			margin: 0 0 24px;
+			border: 2px solid #456879;
+			border-radius: 10px;
+		}
+		
+		.theoryText {
+			background: #649991;
+			font-family: 'Helvetica Neue', sans-serif;
+			font-size: 22px;
+			line-height: 24px;
+			margin: 0 0 24px;
+			border: 2px solid #456879;
+			border-radius: 10px;
+			text-justify: inter-word;
+		}
+		
+		.footer {
+			position: fixed;
+			text-align: center;
+			bottom: 0px;
+			width: 100%;
+		}
+		
+		.tableCell {
+			background: #e8eaed
+		}
+		
+		.tableGreen {
+			background: #b3c157
+		}
+		
+		.tableRed {
+			background: #d87f5f
+		}
+		
+		.gameResultFinal {
+			background: #d9dfe0;
+			box-shadow: 1px 1px 45px #333;
+			transition: 200ms all ease;
+			border: none;
+			padding: 5px 5px;
+		}
+		
+		.gameConclusion {
+			background: #437a37;
+			box-shadow: 1px 1px 45px #333;
+			transition: 200ms all ease;
+			border: none;
+			padding: 5px 5px;
+			border: 2px solid #456879;
+			border-radius: 10px;
+		}
+		
+		.myButton {
+			background: #e5e6e8;
+			border: 2px solid #456879;
+			margin: 0;
+		}
+		
+		form {
+			padding: 20px;
+			background: #779fa3;
+			color: #fff;
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 10px;
+			border: 2px solid #456879;
+			form label,
+			form input,
+			{
+				border: 0;
+				margin-bottom: 3px;
+				display: block;
+				width: 100%;
+			}
+			form input {
+				height: 25px;
+				line-height: 25px;
+				background: #fff;
+				color: #000;
+				padding: 0 6px;
+				-moz-box-sizing: border-box;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			form button {
+				height: 30px;
+				line-height: 30px;
+				background: #fff;
+				color: green;
+				margin-top: 10px;
+				cursor: pointer;
+				width: 100%;
+			}
+			form .error {
+				color: #ff0000;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1 style="text-align:center">Game Theory Based Risk Computation and Resource Allocation</h1>
+	<p>The security of the computer network has become a challenging task with ever increasing attacks against it. The problem that lies ahead of the management and security administrator is to allocate the resources in accordance with the pitfalls in their network system. While traditional risk analysis can provide them the rough idea of what needs to be protected, an efficient method is imperative to plan the resources to tackle the incoming attacks in more dynamic way. This project is the result of similar study which focussed on modelling a traditional IT risk case into a mixed strategy game and help the security professionals to calculate and place their resources against the intruders with the help of game theory. The added advantage it provides over the traditional risk analysis is that, it helps the administrator to re-allocate resources for the required level of safety for their assets. This research paves a way for converting existing IT risk analysis into a more robust logic based analysis which could prove beneficial in planning real world IT risk analysis and resource allocation.</p>
+
+	<div class="ui-widget" style="text-align:center">
+		
+		<h2 class="demoHeaders">Risk Computation Menu</h2>
+		<p>Please use this interface to compare and contrast the different risk scoring methods. Please click any of the options avialable from the drop down menu below.</p>
+
+
+		<div>
+			<select id="myselect">
+				<option selected disabled>Select one option</option>
+				<option value="1">Traditional</option>
+				<option value="2">Game Theory</option>
+				<option value="3">Mixed</option>
+
+			</select>
+		</div>
+		<br>
+
+		<div id="computationArea">
+			<div id="traditionalCheck">
+				<h3>Traditional Method</h3>
+				<div id="traditionalTheory" class="theoryText">
+					This method utilizes the method proposed by Micheal Whitman which makes the calculation using the asset value, likelihood, control and the uncertainity property of the asset.
+					<br> The calculation is done as:
+					<br>
+					<br>
+					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
+					<br>
+				</div>
+				<form id="traditionalForm">
+					<br> Device name:
+					<br>
+					<input type="text" id="deviceName" name="deviceName" value="">
+					<br> Asset Value:
+					<br>
+					<input type="number" id="asset" name="asset" value="">
+					<br> Risk Likelihood:
+					<br>
+					<input type="number" id="risk" name="risk" value="">
+					<br> Uncertainity:
+					<br>
+					<input type="number" id="uncertanity" name="uncertanity" value="">
+					<br> Control:
+					<br>
+					<input type="number" id="control" name="control" value="">
+					<br>
+					<br>
+					<input type="submit" value="Compute">
+					<br>
+					<br>
+					<label id="messageBox" generated="true" class="error"></label>
+
+				</form>
+				<br>
+				<button id="refreshTraditional">Refresh!</button>
+				<br>
+				<br>
+				<p class="notice" id="traditionalText"></p>
+				<div id="gaugeContainer"></div>
+
+			</div>
+
+			<div id="gameTheoryCheck">
+				<h3>Game Theory Method</h3>
+				<div id="gameTheoryTheory" class="theoryText" style="text-align:center; background:#649991;">
+					This method attempts at implementing a competitive mixed strategy game theory in risk analysis for IT risk management. A  The objective of this calculation is to set an example of how implementation of game theory could substantially help the security professionals to make decision over the resource allocation for the ever changing vulnerability pertaining to IT field.
+					<br>
+					The visualization and the charts generated after calculation helps the security experts to make rational decision over the resource allocation. 
+
+					<br> The game matrix for attacker and defender is constructed as:
+					<br>
+					<img src="gameMatrix.PNG" align:center>
+					<br> The attack defense probability for the respective devices are calculated as:
+					<br>
+					<img src="defenseFormula.PNG">
+					<br>
+					<img src="paFormula.PNG">
+					<br>
+				</div>
+
+				<form id="gameForm" method="post">
+					<table id="gameTable" style="margin: 0px auto; border-spacing: 30px;">
+						<tr>
+							<td>
+								<h3> Device 1 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName1" name="deviceName1" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset1" name="asset1" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk1" name="risk1" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity1" name="uncertanity1" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control1" name="control1" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+
+							<td>
+								<h3> Device 2 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName2" name="deviceName2" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset2" name="asset2" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk2" name="risk2" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity2" name="uncertanity2" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control2" name="control2" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+						</tr>
+
+					</table>
+					<input type="submit" value="Compute">
+
+				</form>
+				<div id="gameMessageBox" generated="true" class="error"></div>
+
+
+				<br>
+				<button id="refreshGame">Refresh!</button>
+				<br>
+				<br>
+				<p class="notice" id="gameText" style="text-align:center"></p>
+				<div id="gameChartContainer">
+					<div id="attackProbability" style="display:inline;"></div>
+					<div id="defendProbability" style="display:inline;"></div>
+					<br>
+					<div id="radarChart"></div>
+					<br><br>
+					<div id="gameFinalText" class="gameConclusion"></div>
+				</div>
+				
+
+			</div>
+
+
+
+			<div id="mixedCheck">
+				<h3>Mix Strategy</h3>
+				<div id="mixedStrategy" class="theoryText" style="text-align:center; background:#649991;">
+					This method is the proposed method where the traditional risk scoring is combined with resources allocation as suggested by the computation of competitive game between the attacker and the defender. The numeric values drawn after the computation provides various methods of visualization which will help the security administrator to monitor and defend their perimeter more efficiently. 
+					<hr>
+					The calculation for traditional risk scoring is done as:
+					<br>
+					
+					<p class="formulaBlock"> (Asset x Risk) - (Asset x Risk) x Control + (Asset x Risk) x Uncertainity </p>
+					<br>
+					<hr>
+					
+					The game matrix for attacker and defender is constructed as:
+					<br>
+					<img src="gameMatrix.PNG" align:center>
+					<br>
+					The attack defense probability for the respective devices are calculated as:
+					<br>
+					<img src="defenseFormula.PNG">
+					<br>
+					<img src="paFormula.PNG">
+					<br>
+				</div>
+
+				<form id="mixedForm" method="post">
+					<table id="mixedTable" style="margin: 0px auto; border-spacing: 30px;">
+						<tr>
+							<td>
+								<h3> Device 1 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName3" name="deviceName3" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset3" name="asset3" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk3" name="risk3" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity3" name="uncertanity3" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control3" name="control3" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+
+							<td>
+								<h3> Device 2 </h3>
+								<br> Device name:
+								<br>
+								<input class="my-valid-class" type="text" id="deviceName4" name="deviceName4" value="" required size="35">
+								<br> Asset Value:
+								<br>
+								<input class="my-valid-class" type="number" id="asset4" name="asset4" value="" required min=0 max=100>
+								<br> Risk Likelihood:
+								<br>
+								<input class="my-valid-class" type="number" id="risk4" name="risk4" value="" required min=1 max=100>
+								<br> Uncertainity:
+								<br>
+								<input class="my-valid-class" type="number" id="uncertanity4" name="uncertanity4" value="" required min=0 max=100>
+								<br> Control/Resources:
+								<br>
+								<input class="my-valid-class" type="number" id="control4" name="control4" value="" required min=0 max=100>
+								<br>
+								<br>
+							</td>
+						</tr>
+
+					</table>
+					<input type="submit" value="Compute">
+
+				</form>
+				<div id="gameMessageBox" generated="true" class="error"></div>
+
+
+				<br>
+				<button id="refreshMixed">Refresh!</button>
+				<br>
+				<br>
+				<p class="notice" id="mixedText" style="text-align:center"></p>
+				<div id="mixedChartContainer">
+					<div id="attackProbabilityMixed" style="display:inline;"></div>
+					<div id="defendProbabilityMixed" style="display:inline;"></div>
+					<br><br>
+					<div id="radarChartMixed" style="padding-top:10px"><br><br></div>
+					
+					<br><br>
+					
+					<div id="mixedFinalText" class="gameConclusion"></div>
+					
+					<br><br>
+					
+					<div id="gaugeContainer">
+						<div id="gauge1" style="display:inline;"></div>
+						<div id="gauge2" style="display:inline;"></div>
+						
+					</div>
+					
+					<br>
+					<div id="traditionalTextContainer">
+						<div id="traditionalText1" class=notice style="background:#589977"></div>
+					<div id="traditionalText2"></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/fusioncharts.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+	<script src="js/fusioncharts-jquery-plugin.js"></script>
+
+
+	<script src="jquery-ui.js"></script>
+
+
+	<script>
+		//////////////////////////////////////////////////////
+
+		$(document).ready(function () {
+
+			$("#traditionalCheck").hide();
+			$("#gameTheoryCheck").hide();
+			$("#mixedCheck").hide();
+			$("#traditionalTheory").hide();
+			$("#gameFinalText").hide();
+			$("#mixedFinalText").hide();
+			$("#traditionalText1").hide();
+			$("#refreshTraditional").click(function () {
+				$("#traditionalForm")[0].reset();
+				$("#traditionalText").text("");
+				$("#messageBox").text("");
+				$("#gaugeContainer").hide();
+
+
+			});
+
+
+			$("#refreshGame").click(function () {
+				$("#gameForm")[0].reset();
+				$("#gameText").text("");
+				$("#gameFinalText").hide();
+				$("#gameMessageBox").text("");
+				$("#gameChartContainer").hide();
+			});
+			
+			$("#refreshMixed").click(function () {
+				$("#mixedForm")[0].reset();
+				$("#gameText").text("");
+				$("#gameFinalText").hide();
+				$("#gameMessageBox").text("");
+				$("#mixedChartContainer").hide();
+				$("#mixedText").hide();
+			});
+
+
+			jQuery('#myselect').on('change', (function () {
+				var value = $(this).val();
+
+				if (value == 1) {
+					$("#gameTheoryCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideUp(300, "swing");
+					$("#traditionalCheck").slideDown(300, "swing");
+					$("#traditionalTheory").hide();
+					$("#traditionalTheory").show("bounce", {
+						times: 2
+					}, "slow");
+
+					$("#traditionalForm").submit(function () {
+						//alert("submit clicked");
+
+						var isvalidate = $("#traditionalForm").valid();
+
+
+						if (isvalidate) {
+							var locationGauge = "#gaugeContainer";
+
+							var name = $("#deviceName").val();
+							var asset = $("#asset").val();
+							var risk = $("#risk").val();
+							var uncertanity = $("#uncertanity").val();
+							var control = $("#control").val();
+
+							var riskScore = calculateTraditional(+asset, +risk / 100, +control, +uncertanity);
+							$("#traditionalText").text("The risk score for given device is " + riskScore);
+							$("#gaugeContainer").slideDown(300, "swing");
+							drawGauge(riskScore, name, locationGauge);
+						}
+					});
+
+
+
+					// calculate values
+
+					//display value
+					//calculateTraditional();
+				}
+
+				if (value == 2) {
+					$("#traditionalCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideUp(300, "swing");
+					$("#gameTheoryCheck").slideDown(300, "swing");
+					$("#gameTheoryTheory").hide();
+					$("#gameTheoryTheory").show("bounce", {
+						times: 2
+					}, "slow");
+					$("#gameForm").submit(function (event) {
+						var isvalidate = $("#gameForm").valid();
+						if (isvalidate) {
+							console.log("works so far");
+
+							var name1 = $("#deviceName1").val();
+							var asset1 = $("#asset1").val();
+							var risk1 = $("#risk1").val();
+							var uncertanity1 = $("#uncertanity1").val();
+							var control1 = $("#control1").val();
+
+
+							var Afav = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+							var AttackUnfav = -10 - Afav;
+							var Aunfav = 0 - (+asset1);
+							var Attacfav = (+asset1) - 10;
+
+							var name2 = $("#deviceName2").val();
+							var asset2 = $("#asset2").val();
+							var risk2 = $("#risk2").val();
+							var uncertanity2 = $("#uncertanity2").val();
+							var control2 = $("#control2").val();
+
+							var Bfav = calculateTraditional(+asset2, +risk2 / 100, +control2, +uncertanity2);
+							var BttackUnfav = -10 - Bfav;
+							var Bunfav = 0 - (+asset2);
+							var Bttacfav = (+asset2) - 10;
+
+							var PD = (BttackUnfav - Attacfav) / ((BttackUnfav - Attacfav) + (AttackUnfav - Bttacfav));
+							PD = PD.toFixed(2);
+							var PDnot = 1 - PD;
+							var PA = (Bfav - Bunfav) / ((Bfav - Bunfav) + (Afav - Aunfav));
+							PA = PA.toFixed(2);
+							var PAnot = 1 - PA;
+							location1 = "#attackProbability";
+							location2 = "#defendProbability";
+							caption1 = "Attack probabiliy Distribution";
+							caption2 = "Defend probabailty Distribution";
+							locationDiv = "#radarChart";
+							
+
+
+							var riskScore = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+							
+							
+
+							$("#gameText").html("<h3>The risk matrix for given sets of devices is</h3>" +
+								"<table align=\"center\" style=\"border: 1px solid black; text-align:center\"><tr><th></th><th class=\"tableRed\">" + name1 + "</th><th class=\"tableRed\">" + name2 + "</th></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name1 + "</td><td class=\"tableCell\">" + Afav.toFixed(2) + " " + AttackUnfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bunfav.toFixed(2) + " " + Bttacfav.toFixed(2) + "</td></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name2 + "</td><td class=\"tableCell\">" + Aunfav.toFixed(2) + " " + Attacfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bfav.toFixed(2) + " " + BttackUnfav.toFixed(2) + "</td></tr></table><br><br>" +
+								"<p class=\"gameResultFinal\">Defense Probability of device: " + name1 + " is " + PD + "<br> Defense Probability of device: " + name2 + " is " + (1 - PD) + "</p><br>" +
+								"<p class=\"gameResultFinal\">Attack Probability on device: " + name1 + " is " + PA + "<br> Attack Probability on device: " + name2 + " is " + (1 - PA) + "</p><br>");
+
+
+							//												riskScore + AttackUnfav + Afav + Aunfav + Attacfav);
+							
+
+							$("#gameChartContainer").slideDown(300, "swing");
+							drawGame(PA, PAnot, name1, name2, location1, caption1);
+							drawGame(PD, PDnot, name1, name2, location2, caption2);
+							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
+							$("#gameFinalText").show();
+							$("#gameFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
+								"</span> should be allocated <span class=\"myButton\"> " + (PA*100).toFixed(2) + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + (PAnot*100).toFixed(2) + "%</span> of the available resources.</p>");
+						
+							
+						}
+
+						event.preventDefault();
+
+					});
+
+
+				}
+				if (value == 3) {
+					$("#traditionalCheck").slideUp(300, "swing");
+					$("#gameTheoryCheck").slideUp(300, "swing");
+					$("#mixedCheck").slideDown(300, "swing");
+					$("#mixedForm").submit(function (event) {
+						
+						var isvalidate = $("#mixedForm").valid();
+						if (isvalidate) {
+
+							var name1 = $("#deviceName3").val();
+							var asset1 = $("#asset3").val();
+							var risk1 = $("#risk3").val();
+							var uncertanity1 = $("#uncertanity3").val();
+							var control1 = $("#control3").val();
+
+
+							var Afav = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+							var AttackUnfav = -10 - Afav;
+							var Aunfav = 0 - (+asset1);
+							var Attacfav = (+asset1) - 10;
+
+							var name2 = $("#deviceName4").val();
+							var asset2 = $("#asset4").val();
+							var risk2 = $("#risk4").val();
+							var uncertanity2 = $("#uncertanity4").val();
+							var control2 = $("#control4").val();
+
+							var Bfav = calculateTraditional(+asset2, +risk2 / 100, +control2, +uncertanity2);
+							var BttackUnfav = -10 - Bfav;
+							var Bunfav = 0 - (+asset2);
+							var Bttacfav = (+asset2) - 10;
+
+							var PD = (BttackUnfav - Attacfav) / ((BttackUnfav - Attacfav) + (AttackUnfav - Bttacfav));
+							PD = PD.toFixed(2);
+							var PDnot = 1 - PD;
+							var PA = (Bfav - Bunfav) / ((Bfav - Bunfav) + (Afav - Aunfav));
+							PA = PA.toFixed(2);
+							var PAnot = 1 - PA;
+							location1 = "#attackProbabilityMixed";
+							location2 = "#defendProbabilityMixed";
+							caption1 = "Attack probabiliy Distribution";
+							caption2 = "Defend probabailty Distribution";
+							locationDiv = "#radarChartMixed";
+							locationGauge1 ="#gauge1";
+							locationGauge2 ="#gauge2";
+
+
+							var riskScore = calculateTraditional(+asset1, +risk1 / 100, +control1, +uncertanity1);
+
+							$("#mixedText").html("<h3>The risk matrix for given sets of devices is</h3>" +
+								"<table align=\"center\" style=\"border: 1px solid black; text-align:center\"><tr><th></th><th class=\"tableRed\">" + name1 + "</th><th class=\"tableRed\">" + name2 + "</th></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name1 + "</td><td class=\"tableCell\">" + Afav.toFixed(2) + " " + AttackUnfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bunfav.toFixed(2) + " " + Bttacfav.toFixed(2) + "</td></tr>" +
+								"<tr><td class=\"tableGreen\">Defend " + name2 + "</td><td class=\"tableCell\">" + Aunfav.toFixed(2) + " " + Attacfav.toFixed(2) + "</td>" +
+								"<td class=\"tableCell\">" + Bfav.toFixed(2) + " " + BttackUnfav.toFixed(2) + "</td></tr></table><br><br>" +
+								"<p class=\"gameResultFinal\">Defense Probability of device: " + name1 + " is " + PD + "<br> Defense Probability of device: " + name2 + " is " + (1 - PD).toFixed(2) + "</p><br>" +
+								"<p class=\"gameResultFinal\">Attack Probability on device: " + name1 + " is " + PA + "<br> Attack Probability on device: " + name2 + " is " + (1 - PA).toFixed(2) + "</p><br>");
+
+
+							//												riskScore + AttackUnfav + Afav + Aunfav + Attacfav);
+							//$("#mixedChartContainer").show();
+							$("#mixedChartContainer").slideDown(300, "swing");
+							$("#gameFinalText").show();
+							$("#mixedText").show();
+							$("#traditionalText1").show();
+							drawGame(PA, PAnot, name1, name2, location1, caption1);
+							drawGame(PD, PDnot, name1, name2, location2, caption2);
+							drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv);
+							$("#mixedFinalText").show();
+							$("#mixedFinalText").html("<p style=\"line-height: 30px;\">To maintain the equilibrium between attack and defense the device: <span class=\"myButton\">" + name1 +
+								"</span> should be allocated <span class=\"myButton\"> " + PA*100 + "%</span> of the available resources and device: <span class=\"myButton\">" + name2 +
+								"</span> should be allocated <span class=\"myButton\">" + PAnot*100 + "%</span> of the available resources.</p>");
+						
+							drawGauge(+Afav, name1, locationGauge1);
+							drawGauge(+Bfav, name2, locationGauge2);
+							$("#traditionalText1").html("<p style=\"line-height: 30px;\">The risk score of device: <span class=\"myButton\">" + name1 +
+								"</span> is <span class=\"myButton\"> " + Afav.toFixed(2) + "</span> <br><br> The risk score of device: <span class=\"myButton\">" + name2 +
+								"</span> is <span class=\"myButton\"> " + Bfav.toFixed(2) + "</span> </p>");
+							
+							$("#traditionalText2").html("<h3>Conclusion</h3>"+
+														"<h5>Combining the two methods: traditional and mixed approach, we can identify and allocate resources for the best outcome with given constraints. We know that  the device: "+
+		name1+" has risk score of "+  Afav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PA*100).toFixed(2) +"% of the available resources. Similarly the device: "+ name2+" has risk score of "+  Bfav.toFixed(2) +" derived from traditional method, and to maintain in equlibrium, it is provided "+  (PAnot*100).toFixed(2) +"% of the available resources.<br>This approach not only eliminates the uncertanity of risk scoring but also provides dynamic approach to defend resources if any adjustment has to be made on available resources. </h5>");
+							
+						}
+						
+						event.preventDefault();
+					});
+
+
+				}
+
+			}));
+
+
+
+			function drawGauge(riskScore, deviceName, locationGauge) {
+
+				$(locationGauge).insertFusionCharts({
+					type: 'angulargauge'
+					, width: '400'
+					, height: '250'
+					, dataFormat: 'json'
+					, dataSource: {
+						"chart": {
+							"caption": "Traditional Risk Score"
+							, "subcaption": deviceName
+							, "lowerLimit": "0"
+							, "upperLimit": "100"
+							, "lowerLimitDisplay": "Good"
+							, "upperLimitDisplay": "Bad"
+							, "showValue": "1"
+							, "valueBelowPivot": "1"
+							, "theme": "fint"
+						}
+						, "colorRange": {
+							"color": [
+								{
+									"minValue": "0"
+									, "maxValue": "50"
+									, "code": "#6baa01"
+                    }
+
+
+								
+								, {
+									"minValue": "50"
+									, "maxValue": "75"
+									, "code": "#f8bd19"
+                    }
+
+
+								
+								, {
+									"minValue": "75"
+									, "maxValue": "100"
+									, "code": "#e44a00"
+                    }
+                ]
+						}
+						, "dials": {
+							"dial": [{
+								"value": riskScore
+                }]
+						}
+					}
+				});
+
+
+
+			};
+
+			function drawGame(PA, PB, name1, name2, location, caption) {
+
+				$(location).insertFusionCharts({
+					type: 'doughnut3D'
+					, width: '450'
+					, height: '450'
+					, dataFormat: 'json'
+					, dataSource: {
+						"chart": {
+							"caption": "caption"
+							, "numberPrefix": "$"
+							, "showBorder": "0"
+							, "use3DLighting": "0"
+							, "enableSmartLabels": "0"
+							, "startingAngle": "310"
+							, "showLabels": "0"
+							, "showPercentValues": "1"
+							, "showLegend": "1"
+							, "centerLabelBold": "1"
+							, "showTooltip": "0"
+							, "decimals": "0"
+							, "useDataPlotColorForLabels": "1"
+							, "theme": "fint"
+						}
+						, "data": [{
+							"label": name1
+							, "value": PA
+        }, {
+							"label": name2
+							, "value": PB
+        }, ]
+
+					}
+				});
+
+
+
+			};
+
+			function drawRadar(PA, PAnot, PD, PDnot, name1, name2, locationDiv) {
+
+				
+				$(locationDiv).insertFusionCharts({
+					type: 'radar'
+					, width: '500'
+					, height: '350'
+					, dataFormat: 'json'
+					, dataSource: {
+						"chart": {
+							"caption": "Atack Vs Defense Probability"
+							, "numberPreffix": "$"
+							, "theme": "fint"
+							, "radarfillcolor": "#ffffff"
+						, }
+						, "categories": [{
+							"category": [{
+								"label": " Attack on " + name1
+            }, {
+								"label": "Attack on " + name2
+            }, {
+								"label": "Defense on " + name1
+            }, {
+								"label": "Defense on " + name2
+            }, ]
+        }]
+						, "dataset": [{
+							"seriesname": "Prob. Values,"
+							, "data": [{
+								"value": PA * 100
+            }, {
+								"value": PAnot * 100
+            }, {
+								"value": PD * 100
+            }, {
+								"value": PDnot * 100
+            }, ]
+        }]
+
+
+					}
+				});
+
+			}
+
+
+
+
+			function calculateTraditional(asset, risk, control, uncertanity) {
+
+				var riskScore = (+risk * +asset) - ((+risk * +asset) * (+control / 100)) + ((+risk * +asset) * ((+uncertanity / 100)));
+				return (riskScore);
+
+
+
+			}
+
+			// *** validators ***//
+
+			jQuery.validator.setDefaults({
+				debug: true
+				, success: "valid"
+				, errorClass: "my-error-class"
+				, validClass: "my-valid-class"
+
+
+			});
+
+			// validate form values
+			$("#traditionalForm").validate({
+
+				wrapper: 'div'
+				, errorLabelContainer: "#messageBox",
+
+				rules: {
+					asset: {
+						required: true
+						, range: [0, 100]
+					}
+					, risk: {
+						required: true
+						, range: [0, 100]
+					}
+					, uncertanity: {
+						required: true
+						, range: [0, 100]
+
+					}
+					, control: {
+						required: true
+						, range: [0, 100]
+
+					}
+					, deviceName: {
+						required: true
+						, maxlength: 30
+
+					}
+
+				}
+				, messages: {
+
+					asset: "Asset Value should be between 0-100"
+					, risk: "Risk Likelihood should be between 0-100"
+					, uncertanity: "Uncertanity should be between 0-100"
+					, control: "Control should be between 0-100"
+					, deviceName: "Provide valid device name less than 30 character"
+				}
+			});
+	});
+
+
+
+
+
+
+		////////////////////////////////////////////////////////////////////////////////
+
+
+		// default Jquery UI values do not touch
+
+		$("#button").button();
+		$("#button-icon").button({
+			icon: "ui-icon-gear"
+			, showLabel: false
+		});
+
+
+
+		$("#radioset").buttonset();
+
+
+
+		$("#controlgroup").controlgroup();
+
+
+
+		$("#tabs").tabs();
+
+
+
+		$("#dialog").dialog({
+			autoOpen: false
+			, width: 400
+			, buttons: [
+				{
+					text: "Ok"
+					, click: function () {
+						$(this).dialog("close");
+					}
+		}
+
+
+
+
+
+
+				
+				, {
+					text: "Cancel"
+					, click: function () {
+						$(this).dialog("close");
+					}
+		}
+	]
+		});
+
+		// Link to open the dialog
+		$("#dialog-link").click(function (event) {
+			$("#dialog").dialog("open");
+			event.preventDefault();
+		});
+
+
+
+		$("#datepicker").datepicker({
+			inline: true
+		});
+
+
+
+		$("#slider").slider({
+			range: true
+			, values: [17, 67]
+		});
+
+
+
+		$("#progressbar").progressbar({
+			value: 20
+		});
+
+
+
+		$("#spinner").spinner();
+
+
+
+		$("#menu").menu();
+
+
+
+		$("#tooltip").tooltip();
+
+
+
+		$("#selectmenu").selectmenu();
+
+
+		// Hover states on the static widgets
+		$("#dialog-link, #icons li").hover(
+			function () {
+				$(this).addClass("ui-state-hover");
+			}
+			, function () {
+				$(this).removeClass("ui-state-hover");
+			}
+		);
+	</script>
+	<hr>
+	<footer style="text-align:center">
+		<br>
+
+		<br><img src="Logo_StCloudState.png">
+		<br>
+		<br> Developed for the partial fullfillment of starred paper entitled <b>Improving risk scoring method using game theory</b> to the Department of <b>Masters of Science in Information Assurance</b> at Saint Cloud State University, 2017.
+		<br><br>
+		<p style="font-size:14px">&#x260E; Bikrant Gautam, MSIA, Saint Cloud State University, bikrant.gautam@outlook.com/bgautam1@stcloudstate.edu</pp>
+		<p style="font-size:10px">Developed using <a href="https://jqueryui.com/">jqueryUI</a>, <a href="https://jquery.com/">Jquery</a> and <a href="http://www.fusioncharts.com/">fusionChart</a> with their free/public versions.</p>
+	</footer>
+	<br>
+
+</body>
+
+</html>
