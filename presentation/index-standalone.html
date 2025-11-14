@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bikrant's Timeline</title>
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+
+  <style>
+    body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; overflow: hidden; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+    #story-card {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      width: 650px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: rgba(20, 20, 20, 0.90);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      z-index: 10;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    #story-card.active { opacity: 1; transform: translateY(0); }
+
+    #story-card h2 { margin: 0 0 8px 0; color: #4db6ac; font-size: 26px; font-weight: 600; }
+    #story-card p { margin: 0 0 12px 0; color: #ddd; font-size: 14px; line-height: 1.5; }
+
+    .slide-image { width: 100%; height: 450px; object-fit: contain; border-radius: 8px; margin-bottom: 12px; background: #222; }
+
+    #controls { position: absolute; bottom: 30px; left: 50px; color: white; font-size: 14px; z-index: 10; }
+    .key { background: rgba(255,255,255,0.12); padding: 4px 8px; border-radius: 4px; margin-right: 6px; }
+
+    .mapboxgl-popup-content { 
+      background: rgba(30,30,30,0.95); 
+      color: white; 
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 1px solid #4db6ac;
+    }
+    .mapboxgl-popup-close-button { color: white; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="story-card">
+    <img id="card-image" class="slide-image" src="" alt="Slide image" />
+    <h2 id="card-title">Title</h2>
+    <div id="card-subtitle" style="color:#9bd3c6; font-size:13px; margin-bottom:8px;"></div>
+    <p id="card-desc">Description</p>
+    <div style="font-size:12px; color:#aaa; margin-top:8px;">Item <span id="item-index">0</span> of <span id="item-total">0</span> &middot; Place <span id="place-index">0</span> of <span id="place-total">0</span></div>
+  </div>
+
+  <div id="controls">
+    <span class="key">←</span> Prev item / Prev place &nbsp; <span class="key">→</span> Next item / Next place
+  </div>
+
+  <script>
+    // STANDALONE VERSION - Works by double-clicking (no server needed)
+    // Edit the chapters array below to add your own content
+    
+    mapboxgl.accessToken = '';
+
+    // ==================================================
+    // DATA - Edit this section with your own places
+    // ==================================================
+    const chapters = [
+      {
+        id: 'start',
+        title: 'Welcome',
+        location: { center: [20, 20], zoom: 1.5, pitch: 0, bearing: 0 },
+        items: [
+          { 
+            title: 'A Journey Across Continents', 
+            text: 'Follow bikrant from the mountains of Nepal to the lakes of Minnesota. Press → to begin the journey.', 
+            image: 'https://images.pexels.com/photos/346885/pexels-photo-346885.jpeg' 
+          }
+        ],
+        markers: []
+      },
+      {
+        id: 'nepal',
+        title: 'Nepal - Where It All Began',
+        location: { center: [84.124, 28.3949], zoom: 6.5, pitch: 45, bearing: 0 },
+        items: [
+          { 
+            title: 'Introduction to Nepal', 
+            text: 'Nepal - a small country with incredible diversity. From the flat Terai plains to rolling hills and the mighty Himalayas, home to Mount Everest, the highest peak on Earth at 8,849 meters or 29,032 feet in freedom unit.', 
+            image: 'https://images.pexels.com/photos/2104882/pexels-photo-2104882.jpeg' 
+          },
+          { 
+            title: 'Mount Everest', 
+            text: 'The crown jewel of Nepal - Mount Everest (Sagarmatha). Nepal\'s geography ranges from 60m to 8,849m elevation, offering unmatched natural diversity.', 
+            image: 'https://images.pexels.com/photos/2902939/pexels-photo-2902939.jpeg' 
+          },
+          { 
+            title: 'Growing Up', 
+            text: 'It was Dad: Jagadish, Mom: Sabitra, Dog: Pinto and my brother Ozone and, who is currently a physician in North Carolina.', 
+            image: './assets/images/fullfamily.jpg' 
+          },
+               { 
+            title: 'Mom With Dog', 
+            text: 'During the festival of Kukur tihar.', 
+            image: './assets/images/mom-dog.jpg' 
+          },
+                        { 
+            title: 'Some more pic of dogs', 
+            text: 'Pinto posing during dog festival', 
+            image: './assets/images/dog.jpg' 
+
+          }
+        ],
+        markers: [
+          { coords: [86.9250, 27.9881], title: 'Mount Everest', content: 'World\'s highest peak<br>8,849 meters' }
+        ]
+      },
+      {
+        id: 'lumbini',
+        title: 'Lumbini - Birthplace',
+        location: { center: [83.2765, 27.4833], zoom: 12, pitch: 50, bearing: -20 },
+        items: [
+          { 
+            title: 'Born in Lumbini', 
+            text: 'Born in the flat Terai lands of Nepal, in Lumbini - the birthplace of Lord Buddha.', 
+            image: 'https://images.pexels.com/photos/937465/pexels-photo-937465.jpeg' 
+          },
+          { 
+            title: 'Same Surname, No Relation', 
+            text: 'Fun fact: I share the same surname as Lord Buddha (Gautam), but we\'re not related in any form! Just a coincidence of history.', 
+            image: 'https://images.pexels.com/photos/20306305/pexels-photo-20306305.jpeg' 
+          },
+          { 
+            title: 'Maya Devi Temple', 
+            text: 'The sacred Maya Devi Temple marks the exact spot where Buddha was born. Lumbini is a UNESCO World Heritage Site and a pilgrimage destination for Buddhists worldwide.', 
+            image: 'https://images.pexels.com/photos/32468667/pexels-photo-32468667.jpeg' 
+          }
+        ],
+        markers: [
+          { coords: [83.2765, 27.4833], title: 'Lumbini', content: 'Birthplace of Lord Buddha<br>UNESCO World Heritage Site' }
+        ]
+      },
+      {
+        id: 'pokhara',
+        title: 'Pokhara - Childhood & Youth',
+        location: { center: [83.9856, 28.2096], zoom: 11, pitch: 60, bearing: 80 },
+        items: [
+          { 
+            title: 'Growing Up in Pokhara', 
+            text: 'Spent most of my life here, from early childhood through +2 (high school equivalent). The stunning lake city surrounded by the Annapurna range.', 
+            image: 'https://images.pexels.com/photos/34587987/pexels-photo-34587987.jpeg' 
+          },
+          { 
+            title: 'Phewa Lake', 
+            text: 'Phewa Lake with the Annapurna mountains reflecting in its waters - this view was part of daily life growing up.', 
+            image: 'https://images.pexels.com/photos/14989387/pexels-photo-14989387.jpeg' 
+          },
+          { 
+            title: 'Civil War Era (1996-2006)', 
+            text: 'Childhood was a mixed experience. Nepal was going through a civil war (1996-2006), which shaped much of my formative years. Despite challenges, Pokhara remained a beautiful place to grow up.', 
+            image: 'https://live-production.wcms.abc-cdn.net.au/ce52e41544a99d1195cc28620cce81bd?impolicy=wcms_crop_resize&cropH=2813&cropW=5000&xPos=0&yPos=0&width=862&height=485' 
+          },
+          { 
+            title: 'Annapurna Range', 
+            text: 'The majestic Annapurna and fishtail mountain  - a constant companion during my youth in Pokhara.', 
+            image: './assets/images/mountainhigh.jpg' 
+          }
+        ],
+        markers: [
+          { coords: [83.9856, 28.2096], title: 'Pokhara', content: 'Lake city of Nepal<br>Gateway to Annapurna' }
+        ]
+      },
+      {
+        id: 'kathmandu',
+        title: 'Kathmandu - University & Career',
+        location: { center: [85.3240, 27.7172], zoom: 12, pitch: 55, bearing: -30 },
+        items: [
+          { 
+            title: 'Bachelor of Engineering', 
+            text: 'Moved to Kathmandu for my Bachelor\'s of Engineering. Developed a strong interest in robotics and automation.', 
+            image: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/IOE%2CCentral_Campus.jpg' 
+          },
+          { 
+            title: 'Robots', 
+            text: 'Built various robots during my studies, including line-following and obstacle-avoiding robots. This hands-on experience fueled my passion for technology.', 
+            image: './assets/images/robots.jpg' 
+          },
+          { 
+            title: 'Meeting Mamata', 
+            text: 'In Kathmandu, I met my girlfriend, now wife, Mamata. A chapter that changed everything.', 
+            image: './assets/images/bikrant-mamata1.jpg' 
+          },
+          { 
+            title: 'Together', 
+            text: 'Building our life together in Kathmandu.', 
+            image: 'assets/images/bikrant-mamata-2.jpg' 
+          },
+          { 
+            title: 'Social Work', 
+            text: 'Was very active in social work during my time in Kathmandu. Giving back to the community was always important.', 
+            image: './assets/images/social1.jpg' 
+          },
+          { 
+            title: 'Community Service', 
+            text: 'Traveling and working on various social initiatives across Nepal.', 
+            image: './assets/images/social-2.jpg' 
+          },
+          { 
+            title: 'Logpoint', 
+            text: 'Started my professional career with Logpoint, a Scandinavian software company specializing in cybersecurity and SIEM solutions. Worked there for 4 years before moving to the US.', 
+            image: './assets/images/logpoint1.jpg' 
+          }
+        ],
+        markers: [
+          { coords: [85.3240, 27.7172], title: 'Kathmandu', content: 'Capital of Nepal<br>UNESCO World Heritage Sites' }
+        ]
+      },
+      {
+        id: 'stcloud',
+        title: 'St. Cloud, Minnesota - New Beginnings',
+        location: { center: [-94.1632, 45.5579], zoom: 11, pitch: 50, bearing: 20 },
+        items: [
+          { 
+            title: 'Masters Degree ( 2015-2017)', 
+            text: 'Came to St. Cloud, Minnesota for my Master\'s in Information Assurance with a focus on Computer Science.', 
+            image: 'https://app.streamlineathletes.com/assets/programs/317/st-cloud-state-university_hero.jpg' 
+          },
+          { 
+            title: 'Working in St. Cloud', 
+            text: 'Worked for a tech company in St. Cloud for 1 year after completing my studies.', 
+            image: 'https://images.pexels.com/photos/2883049/pexels-photo-2883049.jpeg?auto=compress&cs=tinysrgb&w=600' 
+          },
+          { 
+            title: 'Wedding in Nepal', 
+            text: 'Meanwhile, went back home to Nepal and got married to Mamata!', 
+            image: './assets/images/wedding.jpg' 
+          },
+          { 
+            title: 'More shots', 
+            text: 'More of us in formals :D.', 
+            image: './assets/images/weddings-2.jpg' 
+          },
+
+        ],
+        markers: [
+          { coords: [-94.1632, 45.5579], title: 'St. Cloud', content: 'Home of SCSU<br>First stop in Minnesota' }
+        ]
+      },
+      {
+        id: 'minneapolis',
+        title: 'Minneapolis - Family & Growth',
+        location: { center: [-93.2650, 44.9778], zoom: 11, pitch: 60, bearing: -45 },
+        items: [
+          { 
+            title: 'Starting at Corvex', 
+            text: 'Moved to Minneapolis and started working as a mobile and web developer for a startup called Corvex.', 
+            image: './assets/images/corvex.jpg' 
+          },
+          { 
+            title: 'Minneapolis Skyline', 
+            text: 'The vibrant city of Minneapolis became our new home.', 
+            image: 'https://images.pexels.com/photos/18777950/pexels-photo-18777950.jpeg' 
+          },
+          { 
+            title: 'Buying Our House', 
+            text: 'A major milestone - bought our first house!', 
+            image: './assets/images/home.jpg' 
+          },
+          { 
+            title: 'Moksha Arrives!', 
+            text: 'Our little Moksha was born - the greatest joy of our lives!', 
+            image: 'assets/images/kid1.jpg' 
+          },
+          { 
+            title: 'Growing Up', 
+            text: 'Watching Moksha grow and explore the world.', 
+            image: 'assets/images/kid2.jpg' 
+          },
+          { 
+            title: 'Precious Moments', 
+            text: 'Every day brings new adventures with our little one.', 
+            image: 'assets/images/kid3.jpg' 
+          },
+          { 
+            title: 'Family Time', 
+            text: 'Making memories together.', 
+            image: 'assets/images/kid4.jpg' 
+          },
+          { 
+            title: 'Four Years at Corvex', 
+            text: 'Worked at Corvex for 4 years, growing as a developer and building innovative mobile and web solutions.', 
+            image: './assets/images/corvex2.jpg' 
+          }
+        ],
+        markers: [
+          { coords: [-93.2650, 44.9778], title: 'Minneapolis', content: 'City of Lakes<br>Home sweet home' }
+        ]
+      },
+      {
+        id: 'stpaul',
+        title: 'St. Paul - Alula',
+        location: { center: [-93.0900, 44.9537], zoom: 12, pitch: 55, bearing: 60 },
+        items: [
+          { 
+            title: 'Alula', 
+            text: 'Made the move to Alula in St. Paul, working on smart security and automation systems. Had fun working on ruby on the rails. Worked there for two years.', 
+            image: 'https://media.istockphoto.com/id/2158493329/photo/saint-paul-minnesota-usa.jpg?s=612x612&w=0&k=20&c=3Fi_ZubAZ4hCXmIBF_7WRGUWWMV0EoW7LO9hmzQ5Pk8=' 
+          },
+        ],
+        markers: [
+          { coords: [-93.0900, 44.9537], title: 'St. Paul', content: 'Minnesota\'s Capital<br>Twin Cities' }
+        ]
+      },
+      {
+        id: 'target',
+        title: 'Target - Present Day',
+        location: { center: [-93.2775, 44.9694], zoom: 13, pitch: 60, bearing: 0 },
+        items: [
+          { 
+            title: 'Joining Target', 
+            text: 'Joined this great team on May this year and have been enjoying learning and contributing to various projects here.', 
+            image: 'https://images.pexels.com/photos/13007849/pexels-photo-13007849.jpeg' 
+          },
+        ],
+        markers: [
+          { coords: [-93.2775, 44.9694], title: 'Target HQ', content: 'Target Corporation<br>Current workplace' }
+        ]
+      },
+      {
+        id: 'hobbies-running',
+        title: 'Hobbies - Running',
+        location: { center: [-93.2650, 44.9778], zoom: 12, pitch: 50, bearing: 90 },
+        items: [
+          { 
+            title: 'Running ( like a snail)', 
+            text: "One of my favorite hobbies - specially when you have a kid on a bike, you'll have to run to catch him.",
+            image: './assets/images/running-partner.jpg' 
+          },
+
+        ],
+        markers: [
+          { coords: [-93.3121, 44.9537], title: 'Lake Calhoun/Bde Maka Ska', content: 'Popular running spot<br>Part of Chain of Lakes' }
+        ]
+      },
+      {
+        id: 'hobbies-brewing',
+        title: 'Hobbies - Beer Making',
+        location: { center: [-93.2650, 44.9778], zoom: 11, pitch: 45, bearing: -90 },
+        items: [
+          { 
+            title: 'Homebrewing', 
+            text: 'My current 3 gallon batch that I will be bottling tonite!', 
+            image: './assets/images/beer1.jpg' 
+          },
+        ],
+        markers: []
+      },
+      {
+        id: 'hobbies-cooking',
+        title: 'Hobbies - Cooking',
+        location: { center: [-93.2650, 44.9778], zoom: 11, pitch: 40, bearing: 180 },
+        items: [
+          { 
+            title: 'Cooking', 
+            text: 'Mamata and I love cooking. She likes to bake while I like to cook. My latest obsession korean bbq!!!', 
+            image: 'https://scontent.cdninstagram.com/v/t51.82787-15/574022916_17967906515977572_1644696984343473234_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=Mzc2MDg3NzAyODkwOTE4NzEyMQ%3D%3D.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0Mzl4MTkzOS5zZHIuQzMifQ%3D%3D&_nc_ohc=GwDf5Jsnkf8Q7kNvwHsu9W8&_nc_oc=Adn0vqj-3_iTUVU_-i9RX7cMktiLYh6eiIUafUs49GqD3Pj3JSuKv7fA3jxzFLt5Ik8Lsh4ClrPBQfsIkPTI-Suo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=DX6rgaRUc5EYRtxVmYg74g&oh=00_AfiN9l5zVm63Eq7yqc_cb17N09zbvqQ9PLNt05xLYYkRhw&oe=691CA192' 
+          },
+          { 
+            title: 'Experimenting in the Kitchen', 
+            text: 'We got a tester to try our recipie, dutch babies with berries and whipped cream.', 
+            image: './assets/images/dutchbabies.jpg' 
+          },
+          { 
+            title: 'Nepali Cuisine', 
+            text: 'Keeping traditions alive by cooking Nepali dishes for the family. Here\'s a classic Dal Bhat (lentil soup with rice and sides).', 
+            image: './assets/images/daal-bhat.jpg' 
+          }
+        ],
+        markers: []
+      },
+      {
+        id: 'hobbies-winter',
+        title: 'Hobbies - Winter Sports',
+        location: { center: [-93.2650, 44.9778], zoom: 10, pitch: 55, bearing: 270 },
+        items: [
+          { 
+            title: 'Skiing', 
+            text: 'Relatively new to Skiing, but have bought our own gears and we try to head out to slopes as much as we can. We took adult lessons and found it to be pretty relaxing and fun.', 
+            image: 'https://images.pexels.com/photos/848618/pexels-photo-848618.jpeg?auto=compress&cs=tinysrgb&w=600' 
+          },
+          { 
+            title: 'Ice Skating', 
+            text: 'Ice skating is another winter joy - Minnesota\'s frozen lakes become natural skating rinks!', 
+            image: './assets/images/iceskating1.jpg' 
+          },
+          { 
+            title: 'Looking Forward', 
+            text: 'Excited for this year to try ice skating with Moksha! Sharing these passions with my child is the next chapter.', 
+            image: './assets/images/iceskate3.jpg' 
+          }
+        ],
+        markers: []
+      },
+            {
+        id: 'Fun Fact',
+        title: 'Fun fact',
+        location: { center: [-93.2650, 44.9778], zoom: 10, pitch: 55, bearing: 270 },
+        items: [
+          { 
+            title: 'Duolingo', 
+            text: 'Today marks my 2000-day streak on Duolingo. Sadly, today is the day I am uninstalling this app. I have enrolled in a Spanish class through the Guild program. Wish me luck!', 
+            image: './assets/images/duol.jpg' 
+          },
+        ],
+        markers: []
+      }
+    ];
+
+    // ==================================================
+    // APP LOGIC - No need to edit below
+    // ==================================================
+    const card = document.getElementById('story-card');
+    const cardTitle = document.getElementById('card-title');
+    const cardSubtitle = document.getElementById('card-subtitle');
+    const cardDesc = document.getElementById('card-desc');
+    const cardImage = document.getElementById('card-image');
+    const itemIndexEl = document.getElementById('item-index');
+    const itemTotalEl = document.getElementById('item-total');
+    const placeIndexEl = document.getElementById('place-index');
+    const placeTotalEl = document.getElementById('place-total');
+
+    let activePlace = 0;
+    let activeItem = 0;
+    let currentMarkers = [];
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/satellite-streets-v12',
+      projection: 'globe',
+      center: chapters[0].location.center,
+      zoom: chapters[0].location.zoom,
+      pitch: chapters[0].location.pitch || 0,
+      bearing: chapters[0].location.bearing || 0
+    });
+
+    map.on('style.load', () => {
+      map.setFog({
+        'color': 'rgb(186, 210, 235)',
+        'high-color': 'rgb(36, 92, 223)',
+        'horizon-blend': 0.02,
+        'space-color': 'rgb(11, 11, 25)',
+        'star-intensity': 0.6
+      });
+    });
+
+    function flyToPlace(placeIndex, immediate = false) {
+      const place = chapters[placeIndex];
+      if (!place || !place.location) return;
+
+      map.flyTo({ 
+        ...place.location, 
+        speed: immediate ? 0.6 : 1.2, 
+        curve: 1, 
+        essential: true 
+      });
+      updateMarkers(place);
+    }
+
+    function updateMarkers(place) {
+      currentMarkers.forEach(m => m.remove());
+      currentMarkers = [];
+
+      if (!place.markers) return;
+
+      place.markers.forEach(md => {
+        const popupHTML = `<strong style="color:#4db6ac">${md.title}</strong><div style="color:#ddd; margin-top:6px">${md.content}</div>`;
+        const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupHTML);
+        const marker = new mapboxgl.Marker({ color: '#4db6ac' })
+          .setLngLat(md.coords)
+          .setPopup(popup)
+          .addTo(map);
+        currentMarkers.push(marker);
+      });
+    }
+
+    function updateCard() {
+      const place = chapters[activePlace];
+      const item = (place && place.items && place.items[activeItem]) ? place.items[activeItem] : null;
+
+      card.classList.remove('active');
+      setTimeout(() => {
+        cardTitle.innerText = place ? place.title : '';
+        cardSubtitle.innerText = item && item.title ? item.title : '';
+        cardDesc.innerText = item && item.text ? item.text : '';
+        cardImage.src = (item && item.image) ? item.image : '';
+
+        itemIndexEl.innerText = (activeItem + 1);
+        itemTotalEl.innerText = (place && place.items) ? place.items.length : 0;
+        placeIndexEl.innerText = (activePlace + 1);
+        placeTotalEl.innerText = chapters.length;
+
+        card.classList.add('active');
+      }, 200);
+    }
+
+    function nextItemOrPlace() {
+      const place = chapters[activePlace];
+      if (!place) return;
+      if (activeItem < (place.items.length - 1)) {
+        activeItem++;
+        updateCard();
+      } else {
+        activePlace = (activePlace + 1) % chapters.length;
+        activeItem = 0;
+        flyToPlace(activePlace);
+        updateCard();
+      }
+    }
+
+    function prevItemOrPlace() {
+      const place = chapters[activePlace];
+      if (!place) return;
+      if (activeItem > 0) {
+        activeItem--;
+        updateCard();
+      } else {
+        activePlace = (activePlace - 1 + chapters.length) % chapters.length;
+        const prevPlace = chapters[activePlace];
+        activeItem = (prevPlace.items && prevPlace.items.length) ? prevPlace.items.length - 1 : 0;
+        flyToPlace(activePlace);
+        updateCard();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextItemOrPlace();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevItemOrPlace();
+      }
+    });
+
+    cardImage.addEventListener('click', () => nextItemOrPlace());
+
+    // Initialize
+    placeTotalEl.innerText = chapters.length;
+    flyToPlace(0, true);
+    updateCard();
+  </script>
+</body>
+</html>
